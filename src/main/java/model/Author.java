@@ -4,16 +4,16 @@ import java.io.Serializable;
 
 public class Author implements Serializable {
     int authorId;
-    String name, naionality, birthYear;
+    String name, nationality, birthYear;
     boolean active;
 
 
-    public Author(int authorId, String name, String naionality, String birthYear,
+    public Author(int authorId, String name, String nationality, String birthYear,
                   boolean active) {
         super();
         this.birthYear = birthYear;
         this.name = name;
-        this.naionality = naionality;
+        this.nationality = nationality;
         this.active = active;
         this.authorId = authorId;
     }
@@ -46,12 +46,12 @@ public class Author implements Serializable {
         this.name = name;
     }
 
-    public String getNaionality() {
-        return naionality;
+    public String getNationality() {
+        return nationality;
     }
 
-    public void setNaionality(String naionality) {
-        this.naionality = naionality;
+    public void setNationality(String nationality) {
+        this.nationality = nationality;
     }
 
     public boolean isActive() {
@@ -65,7 +65,7 @@ public class Author implements Serializable {
     @Override
     public String toString() {
         return "Autor [id_autor=" + authorId + ", nom=" + name + ", any_naixement=" + birthYear
-                + ", nacionalitat=" + naionality + ", actiu=" + active
+                + ", nacionalitat=" + nationality + ", actiu=" + active
                 + "]";
     }
 

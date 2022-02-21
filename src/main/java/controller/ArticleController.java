@@ -19,7 +19,7 @@ public class ArticleController {
 
     private Connection connection;
     private MagazineController magazineController = new MagazineController(connection);
-    private AuthorController authorController = new AuthorController(connection);
+   // private AuthorController authorController = new AuthorController(connection);
 
     public ArticleController(Connection connection) {
         this.connection = connection;
@@ -55,7 +55,8 @@ public class ArticleController {
         String linea = "";
 
         ArrayList<Magazine> magazinesList = magazineController.readMagazinesFile(magazinesFile);
-        ArrayList<Author> authorList = authorController.readAuthorsFile(authorsFile);
+        ArrayList<Author> authorList = new ArrayList<Author>();
+        //= authorController.readAuthorsFile(authorsFile);
 
         while ((linea = br.readLine()) != null) {
             StringTokenizer str = new StringTokenizer(linea, ",");
