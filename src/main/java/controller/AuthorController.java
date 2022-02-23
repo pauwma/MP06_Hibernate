@@ -9,26 +9,32 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.sql.Connection;
-import java.util.ArrayList;
-import java.util.StringTokenizer;
+import java.util.*;
 
 import org.hibernate.SessionFactory;
+
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
 
 public class AuthorController {
 
   private Connection connection;
-  private SessionFactory sessionFactory;
+  private EntityManagerFactory entityManagerFactory;
 
-  public AuthorController(Connection connection, SessionFactory sessionFactory) {
+  public AuthorController(Connection connection) {
     this.connection = connection;
-    this.sessionFactory = sessionFactory;
   }
 
-  public ArrayList<Author> readAuthorsFile(String filename) throws IOException {
+  public AuthorController(Connection connection, EntityManagerFactory entityManagerFactory) {
+    this.connection = connection;
+    this.entityManagerFactory = entityManagerFactory;
+  }
+
+  public List<Author> readAuthorsFile(String filename) throws IOException {
     int id;
     String name, year, country;
     boolean active;
-    ArrayList<Author> authorsList = new ArrayList<Author>();
+    List<Author> authorsList = new ArrayList<Author>();
 
     BufferedReader br = new BufferedReader(new FileReader(filename));
     String linea = "";
@@ -57,22 +63,50 @@ public class AuthorController {
 
   /* Method to CREATE an Autor in the database */
   public void addAuthor(Author author) {
-    Session session = sessionFactory.openSession();
-    Transaction tx = null;
-    Integer AuthorID = null;
-    try {
-      tx = session.beginTransaction();
-      AuthorID = (Integer) session.save(author);
-      tx.commit();
-    } catch (HibernateException e) {
-      if (tx != null)
-        tx.rollback();
-      e.printStackTrace();
-    } finally {
-      session.close();
+    EntityManager em = entityManagerFactory.createEntityManager();
+    em.getTransaction().begin();
+    Author authotExists = (Author) em.find(Author.class, author.getAuthorId());
+    if (authotExists == null ){
+      System.out.println("insert autor");
+      em.persist(author);
     }
-
+    em.getTransaction().commit();
+    em.close();
   }
 
+
+  /* Method to READ all Autors */
+  public void listAuthors() {
+    EntityManager em = entityManagerFactory.createEntityManager();
+    em.getTransaction().begin();
+    List<Author> result = em.createQuery("from Author", Author.class)
+        .getResultList();
+    for (Author author : result) {
+      System.out.println(author.toString());
+    }
+    em.getTransaction().commit();
+    em.close();
+  }
+
+  /* Method to UPDATE activity for an author */
+  public void updateAutor(Integer authorId, boolean active) {
+    EntityManager em = entityManagerFactory.createEntityManager();
+    em.getTransaction().begin();
+    Author author = (Author) em.find(Author.class, authorId);
+    author.setActive(active);
+    em.merge(author);
+    em.getTransaction().commit();
+    em.close();
+  }
+
+  /* Method to DELETE an Author from the records */
+  public void deleteAuthor(Integer authorId) {
+    EntityManager em = entityManagerFactory.createEntityManager();
+    em.getTransaction().begin();
+    Author author = (Author) em.find(Author.class, authorId);
+    em.remove(author);
+    em.getTransaction().commit();
+    em.close();
+  }
 
 }

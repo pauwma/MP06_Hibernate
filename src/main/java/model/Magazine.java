@@ -1,17 +1,25 @@
 package model;
 
+import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.CascadeType;
+
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 public class Magazine implements Serializable {
+    @Id
     private int magazineId;
     private String title;
     private Date publicationDate;
-
-    private List<Article> articlesList = new ArrayList<Article> ();
-
+    @OneToMany
+    @JoinColumn(name="id_revista", referencedColumnName="id_revista")
+    @Cascade(CascadeType.ALL)
+    private List<Article> articles = new ArrayList<Article> ();
 
     public Magazine(int magazineId, String title, Date publicationDate) {
         super();
@@ -19,6 +27,7 @@ public class Magazine implements Serializable {
         this.publicationDate = publicationDate;
         this.magazineId = magazineId;
     }
+
     public Magazine() {
         super();
     }
@@ -40,19 +49,19 @@ public class Magazine implements Serializable {
     public void setMagazineId(int magazineId) {
         this.magazineId = magazineId;
     }
-    public void addArticle(Article art){
-        articlesList.add(art);
-    }
-    public Article getArticle(int i){
 
-        return articlesList.get(i);
+     public void addArticle(Article art){
+      articles.add(art);
+     }
+     public Article getArticle(int i){
+      return articles.get(i);
+     }
 
+    public List<Article> getArticles() {
+        return articles;
     }
-    public List<Article> getArticlesList() {
-        return articlesList;
-    }
-    public void setArticlesList(List<Article> articlesList) {
-        this.articlesList = articlesList;
+    public void setArticles(List<Article> articles) {
+        this.articles = articles;
     }
 
 
@@ -63,7 +72,7 @@ public class Magazine implements Serializable {
 
         result += "\n Llista d'articles: [ \n";
 
-        for (Article a : articlesList) {
+        for (Article a : articles) {
             result += "\t";
             result += a.toString();
             result += "\n";

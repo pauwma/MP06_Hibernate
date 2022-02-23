@@ -1,6 +1,7 @@
 import java.io.IOException;
 import java.sql.Connection;
 import java.util.ArrayList;
+import java.util.List;
 
 import controller.ArticleController;
 import controller.AuthorController;
@@ -16,6 +17,9 @@ import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.cfg.Configuration;
 import org.hibernate.service.ServiceRegistry;
 import view.Menu;
+
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
 
 
 public class Main {
@@ -48,19 +52,31 @@ public class Main {
     }
   }
 
+  public static EntityManagerFactory createEntityManagerFactory(){
+    EntityManagerFactory emf;
+    try {
+      emf = Persistence.createEntityManagerFactory("JPAMagazines");
+    } catch (Throwable ex) {
+      System.err.println("Failed to create EntityManagerFactory object."+ ex);
+      throw new ExceptionInInitializerError(ex);
+    }
+    return emf;
+  }
+
   public static void main(String[] args) {
     ArrayList<Magazine> revistes = new ArrayList();
 
     ConnectionFactory connectionFactory = ConnectionFactory.getInstance();
     Connection c = connectionFactory.connect();
 
-    SessionFactory sessionFactory = buildSessionFactory();
+//    SessionFactory sessionFactory = buildSessionFactory();
+    EntityManagerFactory entityManagerFactory = createEntityManagerFactory();
     //sessionObj = buildSessionFactory().openSession();
 
 
-    AuthorController authorController = new AuthorController(c, sessionFactory);
-    ArticleController articleController = new ArticleController(c);
-    MagazineController magazineController = new MagazineController(c);
+    AuthorController authorController = new AuthorController(c, entityManagerFactory);
+    ArticleController articleController = new ArticleController(c, entityManagerFactory);
+    MagazineController magazineController = new MagazineController(c, entityManagerFactory);
 
     Menu menu = new Menu();
     int opcio;
@@ -74,15 +90,43 @@ public class Main {
         try {
 
           // authorController.printAutors(authorController.readAuthorsFile("src/main/resources/autors.txt"));
-          ArrayList<Author> authors = authorController.readAuthorsFile("src/main/resources/autors.txt");
+        //
+
+         // for (Author a : authors) {
+         //   authorController.addAuthor(a);
+         // }
+
+          // magazineController.printMagazines(magazineController.readMagazinesFile("src/main/resources/revistes.txt"));
+          // magazineController.printMagazines();
+
+          List<Author> authors = authorController.readAuthorsFile("src/main/resources/autors.txt");
+          List<Magazine> magazines = articleController.readArticlesFile("src/main/resources/articles.txt", "src/main/resources/revistes.txt", "src/main/resources/autors.txt");
+          List<Article> articles = articleController.readArticlesFile("src/main/resources/articles.txt", "src/main/resources/autors.txt");
+
+          System.out.println("Revistes llegides des del fitxer");
+          for (int i = 0; i < magazines.size(); i++) {
+            System.out.println(magazines.get(i).toString()+"\n");
+            for (int j = 0; j < magazines.get(i).getArticles().size(); j++) {
+              articleController.addArticle(magazines.get(i).getArticles().get(j));
+              authorController.addAuthor(magazines.get(i).getArticles().get(j).getAuthor());
+            }
+            magazineController.addMagazine(magazines.get(i));
+          }
+
+/*
+          for (Magazine m : magazines) {
+            System.out.println(m);
+            magazineController.addMagazine(m);
+          }
 
           for (Author a : authors) {
             authorController.addAuthor(a);
           }
 
-          // magazineController.printMagazines(magazineController.readMagazinesFile("src/main/resources/revistes.txt"));
-          // magazineController.printMagazines(articleController.readArticlesFile("src/main/resources/articles.txt", "src/main/resources/revistes.txt", "src/main/resources/autors.txt"));
-
+          for (Article ar : articles) {
+            articleController.addArticle(ar);
+          }
+*/
         } catch (NumberFormatException | IOException e) {
 
           e.printStackTrace();

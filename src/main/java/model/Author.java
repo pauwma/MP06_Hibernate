@@ -1,12 +1,13 @@
 package model;
 
+import javax.persistence.Id;
 import java.io.Serializable;
 
 public class Author implements Serializable {
+    @Id
     int authorId;
     String name, nationality, birthYear;
     boolean active;
-
 
     public Author(int authorId, String name, String nationality, String birthYear,
                   boolean active) {
