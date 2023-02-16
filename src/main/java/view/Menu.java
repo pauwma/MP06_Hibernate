@@ -15,7 +15,6 @@ public class Menu {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 
         do {
-
             System.out.println(" \nMENU PRINCIPAL \n");
 
             System.out.println("1. Carrega dades. ");
@@ -34,10 +33,4 @@ public class Menu {
 
         return option;
     }
-
-
-
-
-
-
 }

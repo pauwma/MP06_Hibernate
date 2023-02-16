@@ -1,0 +1,10 @@
+Space Launch Complex 40,Cape Canaveral - FL - USA,871
+Launch Complex 39A,Kennedy Space Center - FL - USA,214
+Space Launch Complex 4E,Vandenberg SFB - CA - USA,710
+CCP 87,Cape Canaveral - FL - USA,871
+31/6,Baikonur Cosmodrome - Republic of Kazakhstan,1536
+Yoshinobu Launch Complex,Tanegashima - Japan,84
+Space Launch Complex 41,Cape Canaveral - FL - USA,871
+Launch Complex 16,Cape Canaveral - FL - USA,871
+Launch Complex 39A,Cape Canaveral - FL - USA,871
+Satish Dhawan Space Centre First Launch Pad,Sriharikota - Republic of India,83

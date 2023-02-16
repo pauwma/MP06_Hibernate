@@ -1,0 +1,9 @@
+Starlink Group 5-2,Go For Launch,Thu  Jan 26th, 2023 - 10:32 AM - 12:24 PM GMT+1,Falcon 9 Block 5,SpaceX,Space Launch Complex 40,Starlink Group 5-2
+Starlink Group 5-3,Date/Time May Change,Tue  Jan 31st, 2023 - 8:27 AM UTC,Falcon 9 Block 6,SpaceX,Launch Complex 39A,Starlink Group 5-3
+Amazonas Nexus,Date/Time TBD,Sun  Feb 5th, 2023 - 12:00 AM UTC,Falcon 9 Block 2,SpaceX,CCP 87,Amazonas Nexus
+Elektro-L No.4,Date/Time May Change,Sun  Feb 5th, 2023 - 9:12 AM UTC,Proton-M Blok DM-03,Khrunichev State Research and Production Space Center,31/6,Elektro-L No.4
+Progress MS-22 (83P),Go For Launch,Thu  Feb 9th, 2023 - 6:15 AM UTC,Soyuz 2.1a,Russian Federal Space Agency (ROSCOSMOS),31/6,Progress MS-22 (83P)
+ALOS-3 (Maiden flight),Go For Launch,Mon  Feb 13th, 2023 - 1:37 AM UTC,H3-22,Mitsubishi Heavy Industries,Yoshinobu Launch Complex,ALOS-3 (Maiden flight)
+Soyuz MS-23,Go For Launch,Mon  Feb 20th, 2023 - 2:57 AM GMT+1,Soyuz 2.1a,Russian Federal Space Agency (ROSCOSMOS),31/6,Soyuz MS-23
+Peregrine lunar lander, Kuipersat-1 & 2 (Maiden flight),Date/Time TBD,Sat  Feb 25th, 2023 - 12:00 AM UTC,Vulcan VC2S,United Launch Alliance,Space Launch Complex 41,Peregrine lunar lander, Kuipersat-1 & 2 (Maiden flight)
+Crew-6,Go For Launch,Sun  Feb 26th, 2023 - 7:07 AM UTC,Falcon 9 Block 5,SpaceX,Launch Complex 39A,Crew-6

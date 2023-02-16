@@ -10,9 +10,9 @@ import java.util.Properties;
 public class ConnectionFactory {
     // init database constants
     private static final String DATABASE_DRIVER = "org.postgresql.Driver";
-    //private static final String DATABASE_URL = "jdbc:postgresql://10.99.108.60:5432/acb";
-    //private static final String USERNAME = "usuario";
-    //private static final String PASSWORD = "password";
+    private static final String DATABASE_URL = "jdbc:postgresql://127.0.0.1:5432/hiber";
+    private static final String USERNAME = "pauwma";
+    private static final String PASSWORD = "P2506";
     private static final String MAX_POOL = "250";
     private static ConnectionFactory instance;
 
