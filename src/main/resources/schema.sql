@@ -1,40 +1,69 @@
-CREATE TABLE autors
-(
-  id_autor integer NOT NULL,
-  nom character varying(30) NOT NULL,
-  any_naixement character(4),
-  nacionalitat character varying(12),
-  actiu boolean NOT NULL,
-  CONSTRAINT pk_autors PRIMARY KEY (id_autor)
+CREATE TABLE location (
+	location_name TEXT NOT NULL,
+	launch_location TEXT NOT NULL,
+	rockets_launched TEXT NOT NULL,
+	PRIMARY KEY (location_name)
 );
 
-
-
-CREATE TABLE revistes
-(
-  id_revista serial NOT NULL,
-  titol character varying(30) NOT NULL,
-  data_publicacio date NOT NULL ,
-  CONSTRAINT pk_revistes PRIMARY KEY (id_revista),
-  CONSTRAINT uk_titol UNIQUE (titol)
+CREATE TABLE mission (
+    mission_name TEXT NOT NULL,
+    mission_launch_cost TEXT NOT NULL,
+    mission_type TEXT NOT NULL,
+    mission_description TEXT NOT NULL,
+    PRIMARY KEY (mission_name)
 );
 
-
-CREATE TABLE articles
-(
-  id_article serial NOT NULL,
-  id_revista integer,
-  id_autor integer NOT NULL,
-  titol character varying(30) NOT NULL,
-  data_creacio date ,
-  publicable boolean NOT NULL,
-  CONSTRAINT pk_articles PRIMARY KEY (id_article),
-  CONSTRAINT fk_art_revistes FOREIGN KEY (id_revista)
-      REFERENCES revistes (id_revista) MATCH SIMPLE
-      ON UPDATE NO ACTION ON DELETE NO ACTION,
-  CONSTRAINT fk_articles_autors FOREIGN KEY (id_autor)
-      REFERENCES autors (id_autor) MATCH SIMPLE
-      ON UPDATE NO ACTION ON DELETE NO ACTION,
-  CONSTRAINT uk_articles UNIQUE (titol)  
+CREATE TABLE rocket (
+    rocket_name TEXT NOT NULL,
+    rocket_family TEXT NOT NULL,
+    rocket_length TEXT NOT NULL,
+    rocket_diameter TEXT NOT NULL,
+    rocket_low_earth_orbit_capacity TEXT NOT NULL,
+    rocket_launch_mass TEXT NOT NULL,
+    rocket_description TEXT NOT NULL,
+    PRIMARY KEY (rocket_name)
 );
 
+ALTER TABLE mission ADD COLUMN rocket_name TEXT NOT NULL
+CONSTRAINT rocket_name REFERENCES rocket (rocket_name)
+ON UPDATE CASCADE ON DELETE CASCADE;
+
+CREATE TABLE agency (
+    agency_name TEXT NOT NULL,
+    agency_type TEXT NOT NULL,
+    agency_abbreviation TEXT NOT NULL,
+    agency_administration TEXT NOT NULL,
+    agency_founded TEXT NOT NULL,
+    agency_country TEXT NOT NULL,
+    agency_spacecraft TEXT NOT NULL,
+    agency_launchers TEXT NOT NULL,
+    agency_description TEXT NOT NULL,
+    PRIMARY KEY (agency_name)
+);
+
+ALTER TABLE rocket ADD COLUMN agency_name TEXT NOT NULL
+CONSTRAINT agency_name REFERENCES agency (agency_name)
+ON UPDATE CASCADE ON DELETE CASCADE;
+
+CREATE TABLE launch (
+	launch_title TEXT NOT NULL,
+	launch_status TEXT NOT NULL,
+	launch_date TEXT NOT NULL,
+	PRIMARY KEY (launch_title)
+);
+
+ALTER TABLE launch ADD COLUMN rocket_name TEXT NOT NULL
+CONSTRAINT rocket_name REFERENCES rocket (rocket_name)
+ON UPDATE CASCADE ON DELETE CASCADE;
+
+ALTER TABLE launch ADD COLUMN agency_name TEXT NOT NULL
+CONSTRAINT agency_name REFERENCES agency (agency_name)
+ON UPDATE CASCADE ON DELETE CASCADE;
+
+ALTER TABLE launch ADD COLUMN location_name TEXT NOT NULL
+CONSTRAINT location_name REFERENCES location (location_name)
+ON UPDATE CASCADE ON DELETE CASCADE;
+
+ALTER TABLE launch ADD COLUMN mission_name TEXT NOT NULL
+CONSTRAINT mission_name REFERENCES mission (mission_name)
+ON UPDATE CASCADE ON DELETE CASCADE;

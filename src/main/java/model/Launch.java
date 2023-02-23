@@ -18,7 +18,7 @@ public class Launch implements Serializable{
     Rocket rocket;
     @Column(name = "agency_name")
     Agency agency;
-    @Column(name = "mission_name")
+    @Column(name = "location_name")
     Location location;
     @Column(name = "mission_name")
     Mission mission;

@@ -13,24 +13,31 @@ public class Menu {
 
     public int mainMenu() {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-
+        boolean validOption = false;
         do {
-            System.out.println(" \nMENU PRINCIPAL \n");
+            System.out.println("\n┏━━━━━━━━━━━━━━━━━━━━━━━━━━━┓");
+            System.out.println("┃       MENU PRINCIPAL      ┃");
+            System.out.println("┣━━━━━━━━━━━━━━━━━━━━━━━━━━━┫");
+            System.out.println("┃  1 -  Base de datos  - 1  ┃");
+            System.out.println("┃  2 -     Selects     - 2  ┃");
+            System.out.println("┃  3 -     Updates     - 3  ┃");
+            System.out.println("┃  4 -     Deletes     - 4  ┃");
+            System.out.println("┃  0 -      Salir      - 0  ┃");
+            System.out.println("┗━━━━━━━━━━━━━━━━━━━━━━━━━━━┛");
 
-            System.out.println("1. Carrega dades. ");
-            System.out.println("2. Consulta dades. ");
-
-            System.out.println("0. Sortir. ");
-
-            System.out.println("Esculli opció: ");
+            System.out.print("Elige una opción: ");
             try {
                 option = Integer.parseInt(br.readLine());
-            } catch (NumberFormatException | IOException e) {
-                System.out.println("valor no vàlid");
-                e.printStackTrace();
+                if(option >= 0 && option <= 4) {
+                    validOption = true;
+                } else {
+                    System.out.println("ERROR - Opción no válida, por favor selecciona una opción entre 0 y 4");
+                }
+            } catch (Exception e) {
+                System.out.println("ERROR - Opción no válida, por favor introduce un número entero");
             }
-        } while (option != 1  && option != 0);
 
+        } while (!validOption);
         return option;
     }
 }
