@@ -4,8 +4,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import controller.DatabaseController;
-import controller.LocationController;
+import controller.*;
 import database.ConnectionFactory;
 import model.*;
 import org.hibernate.HibernateException;
@@ -69,8 +68,12 @@ public class Main {
 
     EntityManagerFactory entityManagerFactory = createEntityManagerFactory();
 
-    DatabaseController databaseController = new DatabaseController(c, entityManagerFactory);
+    AgencyController agencyController = new AgencyController(c, entityManagerFactory);
+    LaunchController launchController = new LaunchController(c, entityManagerFactory);
     LocationController locationController = new LocationController(c, entityManagerFactory);
+    MissionController missionController = new MissionController(c, entityManagerFactory);
+    RocketController rocketController = new RocketController(c, entityManagerFactory);
+    DatabaseController databaseController = new DatabaseController(c, entityManagerFactory, agencyController, launchController, locationController, missionController, rocketController);
 
     Menu menu = new Menu();
     int option;

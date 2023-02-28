@@ -1,8 +1,10 @@
 package controller;
 
 import database.ConnectionFactory;
+import model.Agency;
 
 import javax.persistence.EntityManagerFactory;
+import javax.xml.stream.Location;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
@@ -15,10 +17,20 @@ import java.util.stream.Collectors;
 public class DatabaseController {
     private Connection connection;
     private EntityManagerFactory entityManagerFactory;
+    private AgencyController agencyController;
+    private LaunchController launchController;
+    private LocationController locationController;
+    private MissionController missionController;
+    private RocketController rocketController;
 
-    public DatabaseController(Connection connection, EntityManagerFactory entityManagerFactory) {
+    public DatabaseController(Connection connection, EntityManagerFactory entityManagerFactory, AgencyController agencyController, LaunchController launchController, LocationController locationController, MissionController missionController, RocketController rocketController) {
         this.connection = connection;
         this.entityManagerFactory = entityManagerFactory;
+        this.agencyController =  agencyController;
+        this.launchController =  launchController;
+        this.locationController =  locationController;
+        this.missionController =  missionController;
+        this.rocketController =  rocketController;
     }
 
     /**
@@ -56,11 +68,11 @@ public class DatabaseController {
     /**
      * Inserta todos los registros de los csv en sus respectivas tablas de la base de datos.
      *
-     * @param conn Conexión a la base de datos.
      * @throws SQLException Si ocurre algún error en la ejecución de la consulta SQL.
      */
-    public static void insertAllData(Connection conn) throws SQLException {
+    public static void insertAllData() throws SQLException {
         try {
+
             System.out.println("INFO - Base de datos rellenada");
         } catch (Exception e){
             System.out.println("INFO - No se ha podido rellenar la base de datos.");
