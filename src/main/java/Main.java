@@ -1,7 +1,10 @@
 import java.io.IOException;
 import java.sql.Connection;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+
+import controller.DatabaseController;
 import controller.LocationController;
 import database.ConnectionFactory;
 import model.*;
@@ -60,38 +63,39 @@ public class Main {
     return emf;
   }
 
-  public static void main(String[] args) {
+  public static void main(String[] args) throws SQLException {
     ConnectionFactory connectionFactory = ConnectionFactory.getInstance();
     Connection c = connectionFactory.connect();
 
     EntityManagerFactory entityManagerFactory = createEntityManagerFactory();
 
+    DatabaseController databaseController = new DatabaseController(c, entityManagerFactory);
     LocationController locationController = new LocationController(c, entityManagerFactory);
 
     Menu menu = new Menu();
-    int opcio;
-    opcio = menu.mainMenu();
+    int option;
+    option = menu.mainMenu();
 
-    switch (opcio) {
-
-      case 1:
-
-        try {
-          List<Location> locations = locationController.readLocationFile("src/main/resources/location.txt");
-          for (Location location : locations){
-            System.out.println(location.toString());
-          }
-        } catch (NumberFormatException | IOException e) {
-
-          e.printStackTrace();
-        }
-        break;
-
-      default:
-        System.out.println("Adeu!!");
-        System.exit(1);
-        break;
-
+    while (option > 0 && option <= 4) {
+      switch (option) {
+        case 1:
+          menu.menuDatabase(databaseController);
+          break;
+        case 2:
+          menu.menuSelects();
+          break;
+        case 3:
+          menu.menuUpdates();
+          break;
+        case 4:
+          menu.menuDeletes();
+          break;
+        case 0:
+          System.out.println("Adiós... \uD83D\uDE80");
+          menu.close();
+          break;
+      }
+      option = menu.mainMenu();
     }
   }
 }
