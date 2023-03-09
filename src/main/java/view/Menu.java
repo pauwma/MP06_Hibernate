@@ -9,6 +9,7 @@ import java.io.InputStreamReader;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.Scanner;
 
 public class Menu {
     private int option;
@@ -35,12 +36,8 @@ public class Menu {
 
             System.out.print("Elige una opción: ");
             try {
-                option = Integer.parseInt(br.readLine());
-                if(option >= 0 && option <= 4) {
-                    validOption = true;
-                } else {
-                    System.out.println("ERROR - Opción no válida, por favor selecciona una opción entre 0 y 4");
-                }
+                option = scannerInt("Elige una opción: ",0,4);
+                validOption = true;
             } catch (Exception e) {
                 System.out.println("ERROR - Opción no válida, por favor introduce un número entero");
             }
@@ -67,9 +64,8 @@ public class Menu {
             System.out.println("│  3 -     Rellenar    - 3  │");
             System.out.println("│  0 -      Cerrar     - 0  │");
             System.out.println("└───────────────────────────┘");
-            System.out.print("Elige una opción: ");
             try {
-                option = Integer.parseInt(br.readLine());
+                option = scannerInt("Elige una opción: ",0,3);
                 if (option >= 0 && option <= 3) {
                     switch (option){
                         case 1:
@@ -115,9 +111,8 @@ public class Menu {
             System.out.println("│  3 -   Lanzamiento   - 3  │");
             System.out.println("│  0 -      Cerrar     - 0  │");
             System.out.println("└───────────────────────────┘");
-            System.out.print("Elige una opción: ");
             try {
-                option = Integer.parseInt(br.readLine());
+                option = scannerInt("Elige una opción: ",0,3);
                 if (option >= 0 && option <= 3) {
                     switch (option){
                         case 1:
@@ -136,8 +131,6 @@ public class Menu {
                 }
             } catch (NumberFormatException e) {
                 System.out.println("Error en el formato, por favor ingrese una opción válida.");
-            } catch (IOException e) {
-                System.out.println("Error de entrada/salida.");
             }
         }
         return option;
@@ -161,9 +154,8 @@ public class Menu {
             System.out.println("│  2 -   Condiciones   - 2  │");
             System.out.println("│  0 -      Cerrar     - 0  │");
             System.out.println("└───────────────────────────┘");
-            System.out.print("Elige una opción: ");
             try {
-                option = Integer.parseInt(br.readLine());
+                option = scannerInt("Elige una opción: ",0,2);
                 if (option >= 0 && option <= 2) {
                     switch (option){
                         case 1:
@@ -179,8 +171,6 @@ public class Menu {
                 }
             } catch (NumberFormatException e) {
                 System.out.println("Error en el formato, por favor ingrese una opción válida.");
-            } catch (IOException e) {
-                System.out.println("Error de entrada/salida.");
             }
         }
         return option;
@@ -204,9 +194,8 @@ public class Menu {
             System.out.println("│  2 -   Condiciones   - 2  │");
             System.out.println("│  0 -      Cerrar     - 0  │");
             System.out.println("└───────────────────────────┘");
-            System.out.print("Elige una opción: ");
             try {
-                option = Integer.parseInt(br.readLine());
+                option = scannerInt("Elige una opción",0,2);
                 if (option >= 0 && option <= 2) {
                     switch (option){
                         case 1:
@@ -222,8 +211,6 @@ public class Menu {
                 }
             } catch (NumberFormatException e) {
                 System.out.println("Error en el formato, por favor ingrese una opción válida.");
-            } catch (IOException e) {
-                System.out.println("Error de entrada/salida.");
             }
         }
         return option;
@@ -234,5 +221,32 @@ public class Menu {
      */
     public void close(){
         close = true;
+    }
+
+    /**
+     * Método para preguntar al usuario por un Integer con excepciones.
+     * @param pregunta Pregunta para mostrar por pantalla.
+     * @param min Número mínimo.
+     * @param max Número máximo.
+     */
+    public static int scannerInt(String pregunta, int min, int max) {
+        Scanner sc = new Scanner(System.in);
+        int userInput = 0;
+        boolean isValid = false;
+        while (!isValid) {
+            try {
+                System.out.print(pregunta);
+                userInput = sc.nextInt();
+                if (userInput >= min && userInput <= max) {
+                    isValid = true;
+                } else {
+                    System.out.println("El número debe estar entre " + min + " y " + max + ".");
+                }
+            } catch (Exception e) {
+                System.out.println("Ocurrió un error al leer la entrada. Por favor, inténtalo de nuevo con un número entero.");
+                sc.next();
+            }
+        }
+        return userInput;
     }
 }

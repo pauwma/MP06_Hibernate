@@ -16,7 +16,8 @@ public class Mission implements Serializable{
     String mission_launch_cost;
     @Column(name = "mission_description")
     String mission_description;
-    @Column(name = "rocket_name")
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinColumn(name = "rocket_name")
     Rocket rocket;
 
     public Mission(String mission_name, String mission_type, String mission_launch_cost, String mission_description, Rocket rocket) {

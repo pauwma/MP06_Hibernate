@@ -78,11 +78,7 @@ public class AgencyController {
   public List<Agency> listAgency() {
     EntityManager em = entityManagerFactory.createEntityManager();
     em.getTransaction().begin();
-    List<Agency> result = em.createQuery("from agency", Agency.class).getResultList();
-
-    for (Agency agency : result) {
-      System.out.println(agency.toString());
-    }
+    List<Agency> result = em.createQuery("from Agency", Agency.class).getResultList();
     em.getTransaction().commit();
     em.close();
 

@@ -14,13 +14,17 @@ public class Launch implements Serializable{
     String launch_status;
     @Column(name = "launch_date")
     String launch_date;
-    @Column(name = "rocket_name")
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinColumn(name = "rocket_name")
     Rocket rocket;
-    @Column(name = "agency_name")
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinColumn(name = "agency_name")
     Agency agency;
-    @Column(name = "location_name")
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinColumn(name = "location_name")
     Location location;
-    @Column(name = "mission_name")
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinColumn(name = "mission_name")
     Mission mission;
 
     public Launch(String launch_title, String launch_status, String launch_date, Rocket rocket, Agency agency, Location location, Mission mission) {

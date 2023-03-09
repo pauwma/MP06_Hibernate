@@ -59,16 +59,14 @@ public class LocationController {
   }
 
   /* Method to READ all Magazines */
-  public void listLocation() {
+  public List<Location> listLocation() {
     EntityManager em = entityManagerFactory.createEntityManager();
     em.getTransaction().begin();
-    List<Location> result = em.createQuery("from location", Location.class).getResultList();
-
-    for (Location location : result) {
-      System.out.println(location.toString());
-    }
+    List<Location> result = em.createQuery("from Location", Location.class).getResultList();
     em.getTransaction().commit();
     em.close();
+
+    return result;
   }
 
   /* Method to UPDATE activity for an Magazine */

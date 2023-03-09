@@ -75,11 +75,8 @@ public class DatabaseController {
             locationController.insertLocationList();
             agencyController.insertAgencyList();
             rocketController.insertRocketList();
-            /*
-            insertAgencys(conn);
-            insertRockets(conn);
-            insertMissions(conn);
-            insertLaunches(conn);*/
+            missionController.insertMissionList();
+            launchController.insertLaunchList();
             System.out.println("INFO - Base de datos rellenada");
         } catch (Exception e){
             System.out.println(e.toString());

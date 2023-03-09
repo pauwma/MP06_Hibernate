@@ -18,7 +18,7 @@ public class RocketController {
   private Connection connection;
   private EntityManagerFactory entityManagerFactory;
 
-  private AgencyController agencyController = new AgencyController(connection, entityManagerFactory);
+  private AgencyController agencyController;
 
   public RocketController(Connection connection) {
     this.connection = connection;
@@ -39,7 +39,7 @@ public class RocketController {
     String rocket_low_earth_orbit_capacity = "";
     String rocket_description = "";
     String agency_name = "";
-    Agency agency;
+    Agency agency = null;
 
     List<Agency> agencyList = agencyController.listAgency();
     List<Rocket> rocketList = new ArrayList();
@@ -48,6 +48,7 @@ public class RocketController {
     String linea = "";
     while ((linea = br.readLine()) != null) {
       StringTokenizer str = new StringTokenizer(linea, ",");
+      agency_name = str.nextToken();
       rocket_name = str.nextToken();
       rocket_family = str.nextToken();
       rocket_length = str.nextToken();
@@ -55,22 +56,14 @@ public class RocketController {
       rocket_launch_mass = str.nextToken();
       rocket_low_earth_orbit_capacity = str.nextToken();
       rocket_description = str.nextToken();
-      System.out.println("aqui 2");
-      agency_name = str.nextToken();
-      }
-      agency = null;
       for (Agency a : agencyList) {
-      if (a.getAgency_name().equals(agency_name)) {
-        agency = a;
-        break;
+        if (a.getAgency_name().equals(agency_name)) {
+          agency = a;
+          Rocket rocket = new Rocket(rocket_name, rocket_family, rocket_length, rocket_diameter, rocket_launch_mass, rocket_low_earth_orbit_capacity, rocket_description, agency);
+          rocketList.add(rocket);
+          break;
+        }
       }
-      if (agency == null) {
-        System.out.println("ERROR - No se ha encontrado la agencia \"" +agency_name+ "\"");
-      } else {
-        Rocket rocket = new Rocket(rocket_name, rocket_family, rocket_length, rocket_diameter, rocket_launch_mass, rocket_low_earth_orbit_capacity, rocket_description, agency);
-        rocketList.add(rocket);
-      }
-
     }
     br.close();
     return rocketList;
@@ -90,15 +83,14 @@ public class RocketController {
     em.close();
   }
 
-  public void listRocket() {
+  public List<Rocket> listRocket() {
     EntityManager em = entityManagerFactory.createEntityManager();
     em.getTransaction().begin();
-    List<Rocket> result = em.createQuery("from rocket", Rocket.class).getResultList();
-    for (Rocket rocket : result) {
-      System.out.println(rocket.toString());
-    }
+    List<Rocket> result = em.createQuery("from Rocket", Rocket.class).getResultList();
     em.getTransaction().commit();
     em.close();
+
+    return result;
   }
 
   public void updateRocket(String rocket_name) {
