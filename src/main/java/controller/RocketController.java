@@ -1,20 +1,24 @@
 package controller;
 
+import model.Agency;
 import model.Location;
+import model.Rocket;
 
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
+import javax.persistence.*;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.StringTokenizer;
 
 public class RocketController {
 
   private Connection connection;
   private EntityManagerFactory entityManagerFactory;
+
+  private AgencyController agencyController = new AgencyController(connection, entityManagerFactory);
 
   public RocketController(Connection connection) {
     this.connection = connection;
@@ -23,74 +27,102 @@ public class RocketController {
   public RocketController(Connection connection, EntityManagerFactory entityManagerFactory) {
     this.connection = connection;
     this.entityManagerFactory = entityManagerFactory;
+    this.agencyController = new AgencyController(connection, entityManagerFactory);
   }
 
-  public List<Location> readLocationFile(String filename) throws IOException {
-    String location_name;
-    String location_location;
-    int rockets_launched;
-    List<Location> locationList = new ArrayList();
+  public List<Rocket> readRocketFile(String filename) throws IOException {
+    String rocket_name = "";
+    String rocket_family = "";
+    String rocket_length = "";
+    String rocket_diameter = "";
+    String rocket_launch_mass = "";
+    String rocket_low_earth_orbit_capacity = "";
+    String rocket_description = "";
+    String agency_name = "";
+    Agency agency;
+
+    List<Agency> agencyList = agencyController.listAgency();
+    List<Rocket> rocketList = new ArrayList();
 
     BufferedReader br = new BufferedReader(new FileReader(filename));
     String linea = "";
     while ((linea = br.readLine()) != null) {
-      String[] parts = linea.split(",");
-      location_name = parts[0];
-      location_location = parts[1];
-      rockets_launched = Integer.parseInt(parts[2]);
-      Location location = new Location(location_name, location_location, rockets_launched);
-      locationList.add(location);
+      StringTokenizer str = new StringTokenizer(linea, ",");
+      rocket_name = str.nextToken();
+      rocket_family = str.nextToken();
+      rocket_length = str.nextToken();
+      rocket_diameter = str.nextToken();
+      rocket_launch_mass = str.nextToken();
+      rocket_low_earth_orbit_capacity = str.nextToken();
+      rocket_description = str.nextToken();
+      System.out.println("aqui 2");
+      agency_name = str.nextToken();
+      }
+      agency = null;
+      for (Agency a : agencyList) {
+      if (a.getAgency_name().equals(agency_name)) {
+        agency = a;
+        break;
+      }
+      if (agency == null) {
+        System.out.println("ERROR - No se ha encontrado la agencia \"" +agency_name+ "\"");
+      } else {
+        Rocket rocket = new Rocket(rocket_name, rocket_family, rocket_length, rocket_diameter, rocket_launch_mass, rocket_low_earth_orbit_capacity, rocket_description, agency);
+        rocketList.add(rocket);
+      }
+
     }
     br.close();
-    return locationList;
+    return rocketList;
   }
 
-  public void printLocation(ArrayList<Location> locationList) {
-    for (int i = 0; i < locationList.size(); i++) {
-      System.out.println(locationList.get(i).toString());
+  public void printRocket(ArrayList<Rocket> rocketList) {
+    for (int i = 0; i < rocketList.size(); i++) {
+      System.out.println(rocketList.get(i).toString());
     }
   }
 
-  /* Method to CREATE a Magazine  in the database */
-  public void addLocation(Location location) {
+  public void addRocket(Rocket rocket) {
     EntityManager em = entityManagerFactory.createEntityManager();
     em.getTransaction().begin();
-    em.merge(location);
-
+    em.merge(rocket);
     em.getTransaction().commit();
     em.close();
   }
 
-  /* Method to READ all Magazines */
-  public void listLocation() {
+  public void listRocket() {
     EntityManager em = entityManagerFactory.createEntityManager();
     em.getTransaction().begin();
-    List<Location> result = em.createQuery("from location", Location.class).getResultList();
-
-    for (Location location : result) {
-      System.out.println(location.toString());
+    List<Rocket> result = em.createQuery("from rocket", Rocket.class).getResultList();
+    for (Rocket rocket : result) {
+      System.out.println(rocket.toString());
     }
     em.getTransaction().commit();
     em.close();
   }
 
-  /* Method to UPDATE activity for an Magazine */
-  public void updateLocation(String location_name) {
+  public void updateRocket(String rocket_name) {
     EntityManager em = entityManagerFactory.createEntityManager();
     em.getTransaction().begin();
-    Location location = (Location) em.find(Location.class, location_name);
-    em.merge(location);
+    Rocket rocket = (Rocket) em.find(Rocket.class, rocket_name);
+    em.merge(rocket);
     em.getTransaction().commit();
     em.close();
   }
 
-  /* Method to DELETE an Magazine from the records */
-  public void deleteLocation(String location_name) {
+  public void deleteRocket(String rocket_name) {
     EntityManager em = entityManagerFactory.createEntityManager();
     em.getTransaction().begin();
-    Location location = (Location) em.find(Location.class, location_name);
-    em.remove(location);
+    Rocket rocket = (Rocket) em.find(Rocket.class, rocket_name);
+    em.remove(rocket);
     em.getTransaction().commit();
     em.close();
+  }
+
+  public void insertRocketList() throws IOException {
+    List<Rocket> rocketList = readRocketFile("src/main/resources/rocket.txt");
+    for (Rocket rocket : rocketList){
+      addRocket(rocket);
+    }
   }
 }

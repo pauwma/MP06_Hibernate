@@ -70,11 +70,19 @@ public class DatabaseController {
      *
      * @throws SQLException Si ocurre algún error en la ejecución de la consulta SQL.
      */
-    public static void insertAllData() throws SQLException {
+    public void insertAllData() throws SQLException {
         try {
-
+            locationController.insertLocationList();
+            agencyController.insertAgencyList();
+            rocketController.insertRocketList();
+            /*
+            insertAgencys(conn);
+            insertRockets(conn);
+            insertMissions(conn);
+            insertLaunches(conn);*/
             System.out.println("INFO - Base de datos rellenada");
         } catch (Exception e){
+            System.out.println(e.toString());
             System.out.println("INFO - No se ha podido rellenar la base de datos.");
         }
     }

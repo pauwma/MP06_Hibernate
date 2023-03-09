@@ -1,7 +1,7 @@
 CREATE TABLE location (
 	location_name TEXT NOT NULL,
-	launch_location TEXT NOT NULL,
-	rockets_launched TEXT NOT NULL,
+	location_location TEXT NOT NULL,
+	rockets_launched INT NOT NULL,
 	PRIMARY KEY (location_name)
 );
 

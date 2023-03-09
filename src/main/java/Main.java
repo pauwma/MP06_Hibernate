@@ -3,6 +3,7 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 
 import controller.*;
 import database.ConnectionFactory;
@@ -74,6 +75,7 @@ public class Main {
     MissionController missionController = new MissionController(c, entityManagerFactory);
     RocketController rocketController = new RocketController(c, entityManagerFactory);
     DatabaseController databaseController = new DatabaseController(c, entityManagerFactory, agencyController, launchController, locationController, missionController, rocketController);
+    SelectController selectController = new SelectController(c, entityManagerFactory, agencyController, launchController, locationController, missionController, rocketController);
 
     Menu menu = new Menu();
     int option;
@@ -85,7 +87,7 @@ public class Main {
           menu.menuDatabase(databaseController);
           break;
         case 2:
-          menu.menuSelects();
+          menu.menuSelects(selectController);
           break;
         case 3:
           menu.menuUpdates();

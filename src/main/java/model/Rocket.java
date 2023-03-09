@@ -8,13 +8,22 @@ import java.io.Serializable;
 @Table(name = "rocket")
 public class Rocket implements Serializable{
     @Id
+    @Column
     String rocket_name;
+    @Column
     String rocket_family;
+    @Column
     String rocket_length;
+    @Column
     String rocket_diameter;
+    @Column
     String rocket_launch_mass;
+    @Column
     String rocket_low_earth_orbit_capacity;
+    @Column
     String rocket_description;
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinColumn(name = "agency_name")
     Agency agency;
 
     public Rocket(String rocket_name, String rocket_family, String rocket_length, String rocket_diameter, String rocket_launch_mass, String rocket_low_earth_orbit_capacity, String rocket_description, Agency agency) {

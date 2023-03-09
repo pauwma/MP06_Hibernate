@@ -32,10 +32,10 @@ public class LocationController {
     BufferedReader br = new BufferedReader(new FileReader(filename));
     String linea = "";
     while ((linea = br.readLine()) != null) {
-      String[] parts = linea.split(",");
-      location_name = parts[0];
-      location_location = parts[1];
-      rockets_launched = Integer.parseInt(parts[2]);
+      StringTokenizer str = new StringTokenizer(linea, ",");
+      location_name = str.nextToken();
+      location_location = str.nextToken();
+      rockets_launched = Integer.parseInt(str.nextToken());
       Location location = new Location(location_name, location_location, rockets_launched);
       locationList.add(location);
     }
@@ -54,7 +54,6 @@ public class LocationController {
     EntityManager em = entityManagerFactory.createEntityManager();
     em.getTransaction().begin();
     em.merge(location);
-
     em.getTransaction().commit();
     em.close();
   }
@@ -91,4 +90,12 @@ public class LocationController {
     em.getTransaction().commit();
     em.close();
   }
+
+  public void insertLocationList() throws IOException {
+    List<Location> locationList = readLocationFile("src/main/resources/location.txt");
+    for (Location location : locationList){
+      addLocation(location);
+    }
+  }
+
 }

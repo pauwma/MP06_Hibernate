@@ -25,7 +25,7 @@ public class LaunchController {
     this.entityManagerFactory = entityManagerFactory;
   }
 
-  public List<Location> readLocationFile(String filename) throws IOException {
+  public List<Location> readLaunchFile(String filename) throws IOException {
     String location_name;
     String location_location;
     int rockets_launched;
@@ -45,14 +45,13 @@ public class LaunchController {
     return locationList;
   }
 
-  public void printLocation(ArrayList<Location> locationList) {
+  public void printLaunch(ArrayList<Location> locationList) {
     for (int i = 0; i < locationList.size(); i++) {
       System.out.println(locationList.get(i).toString());
     }
   }
 
-  /* Method to CREATE a Magazine  in the database */
-  public void addLocation(Location location) {
+  public void addLaunch(Location location) {
     EntityManager em = entityManagerFactory.createEntityManager();
     em.getTransaction().begin();
     em.merge(location);
@@ -61,8 +60,7 @@ public class LaunchController {
     em.close();
   }
 
-  /* Method to READ all Magazines */
-  public void listLocation() {
+  public void listLaunch() {
     EntityManager em = entityManagerFactory.createEntityManager();
     em.getTransaction().begin();
     List<Location> result = em.createQuery("from location", Location.class).getResultList();
@@ -74,8 +72,7 @@ public class LaunchController {
     em.close();
   }
 
-  /* Method to UPDATE activity for an Magazine */
-  public void updateLocation(String location_name) {
+  public void updateLaunch(String location_name) {
     EntityManager em = entityManagerFactory.createEntityManager();
     em.getTransaction().begin();
     Location location = (Location) em.find(Location.class, location_name);
@@ -84,8 +81,7 @@ public class LaunchController {
     em.close();
   }
 
-  /* Method to DELETE an Magazine from the records */
-  public void deleteLocation(String location_name) {
+  public void deleteLaunch(String location_name) {
     EntityManager em = entityManagerFactory.createEntityManager();
     em.getTransaction().begin();
     Location location = (Location) em.find(Location.class, location_name);

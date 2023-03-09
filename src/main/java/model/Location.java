@@ -12,7 +12,7 @@ public class Location implements Serializable{
     String location_name;
     @Column(name = "location_location")
     String location_location;
-    @Column(name = "launch_title")
+    @Column(name = "rockets_launched")
     int rockets_launched;
 
     public Location(String locationName, String locationLocation, int rocketsLaunched){
