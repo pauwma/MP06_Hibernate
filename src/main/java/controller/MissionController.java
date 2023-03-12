@@ -65,9 +65,9 @@ public class MissionController {
     return missionList;
   }
 
-  public void printMission(ArrayList<Location> locationList) {
+  public void printMission(List<Mission> locationList) {
     for (int i = 0; i < locationList.size(); i++) {
-      System.out.println(locationList.get(i).toString());
+      System.out.println((i+1) + " " + locationList.get(i).toString());
     }
   }
 

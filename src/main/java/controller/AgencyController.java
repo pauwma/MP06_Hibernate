@@ -61,9 +61,9 @@ public class AgencyController {
     return agencyList;
   }
 
-  public void printAgency(ArrayList<Agency> agencyList) {
+  public void printAgency(List<Agency> agencyList) {
     for (int i = 0; i < agencyList.size(); i++) {
-      System.out.println(agencyList.get(i).toString());
+      System.out.println((i+1) +  " " + agencyList.get(i).toString());
     }
   }
 

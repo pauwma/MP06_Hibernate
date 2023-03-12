@@ -31,19 +31,19 @@ public class SelectController {
         try {
             switch (option) {
                 case 1:
-                    agencyController.listAgency();
+                    launchController.printLaunch(launchController.listLaunch());
                     break;
                 case 2:
-                    launchController.listLaunch();
+                    rocketController.printRocket(rocketController.listRocket());
                     break;
                 case 3:
-                    locationController.listLocation();
+                    agencyController.printAgency(agencyController.listAgency());
                     break;
                 case 4:
-                    missionController.listMission();
+                    locationController.printLocation(locationController.listLocation());
                     break;
                 case 5:
-                    rocketController.listRocket();
+                    missionController.printMission(missionController.listMission());
                     break;
                 default:
                     System.out.println("ERROR - Opción no válida.");

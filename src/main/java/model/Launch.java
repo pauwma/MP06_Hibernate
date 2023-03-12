@@ -100,14 +100,11 @@ public class Launch implements Serializable{
 
     @Override
     public String toString() {
-        return "Launch{" +
-                "launch_title='" + launch_title + '\'' +
-                ", launch_status='" + launch_status + '\'' +
-                ", launch_date='" + launch_date + '\'' +
-                ", rocket=" + rocket.rocket_name +
-                ", agency=" + agency.agency_name +
-                ", location=" + location.location_name +
-                ", mission=" + mission.mission_name +
-                '}';
+        String rocket_name = rocket.getRocket_name();
+        String agency_name = agency.getAgency_name();
+        String location_name = location.location_name;
+        String mission_name = mission.getMission_name();
+        return "| " + launch_title + " | " + launch_status + " | " + launch_date
+                + " | " + rocket_name + " | " + agency_name + " | " + location_name + " | " + mission_name + " |";
     }
 }

@@ -108,15 +108,7 @@ public class Rocket implements Serializable{
 
     @Override
     public String toString() {
-        return "Rocket{" +
-                "rocket_name='" + rocket_name + '\'' +
-                ", rocket_family='" + rocket_family + '\'' +
-                ", rocket_length='" + rocket_length + '\'' +
-                ", rocket_diameter='" + rocket_diameter + '\'' +
-                ", rocket_launch_mass='" + rocket_launch_mass + '\'' +
-                ", rocket_low_earth_orbit_capacity='" + rocket_low_earth_orbit_capacity + '\'' +
-                ", rocket_description='" + rocket_description + '\'' +
-                ", agency=" + agency.agency_name +
-                '}';
+        return "| " + rocket_name + " | " + rocket_family + " | " + rocket_length + " | " + rocket_diameter + " | " + rocket_launch_mass +
+                " | " + rocket_low_earth_orbit_capacity + " | " + rocket_description + " | " + agency.agency_name + " |";
     }
 }

@@ -75,12 +75,6 @@ public class Mission implements Serializable{
 
     @Override
     public String toString() {
-        return "Mission{" +
-                "mission_name='" + mission_name + '\'' +
-                ", mission_type='" + mission_type + '\'' +
-                ", mission_launch_cost='" + mission_launch_cost + '\'' +
-                ", mission_description='" + mission_description + '\'' +
-                ", rocket=" + rocket.rocket_name +
-                '}';
+        return  "| " + mission_name +  " | " + mission_type +  " | " + mission_launch_cost +  " | " + mission_description + " | " + rocket.getRocket_name() +  " |";
     }
 }

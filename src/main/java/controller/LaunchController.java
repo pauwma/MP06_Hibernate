@@ -98,9 +98,9 @@ public class LaunchController {
     return launchList;
   }
 
-  public void printLaunch(ArrayList<Location> locationList) {
-    for (int i = 0; i < locationList.size(); i++) {
-      System.out.println(locationList.get(i).toString());
+  public void printLaunch(List<Launch> launchList) {
+    for (int i = 0; i < launchList.size(); i++) {
+      System.out.println((i+1)+ " " +launchList.get(i).toString());
     }
   }
 

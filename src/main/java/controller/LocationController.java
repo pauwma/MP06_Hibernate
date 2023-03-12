@@ -43,9 +43,9 @@ public class LocationController {
     return locationList;
   }
 
-  public void printLocation(ArrayList<Location> locationList) {
+  public void printLocation(List<Location> locationList) {
     for (int i = 0; i < locationList.size(); i++) {
-      System.out.println(locationList.get(i).toString());
+      System.out.println((i+1) + " " + locationList.get(i).toString());
     }
   }
 

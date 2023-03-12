@@ -33,8 +33,6 @@ public class Menu {
             System.out.println("┃  4 -     Deletes     - 4  ┃");
             System.out.println("┃  0 -      Salir      - 0  ┃");
             System.out.println("┗━━━━━━━━━━━━━━━━━━━━━━━━━━━┛");
-
-            System.out.print("Elige una opción: ");
             try {
                 option = scannerInt("Elige una opción: ",0,4);
                 validOption = true;

@@ -52,10 +52,6 @@ public class Location implements Serializable{
 
     @Override
     public String toString() {
-        return "Location{" +
-                "locationName='" + location_name + '\'' +
-                ", locationLocation='" + location_location + '\'' +
-                ", rocketsLaunched=" + rockets_launched +
-                '}';
+        return  "| " + location_name +  " | " + location_location +  " | " + rockets_launched +  " |";
     }
 }

@@ -69,9 +69,9 @@ public class RocketController {
     return rocketList;
   }
 
-  public void printRocket(ArrayList<Rocket> rocketList) {
+  public void printRocket(List<Rocket> rocketList) {
     for (int i = 0; i < rocketList.size(); i++) {
-      System.out.println(rocketList.get(i).toString());
+      System.out.println((i+1)+ " " +rocketList.get(i).toString());
     }
   }
 

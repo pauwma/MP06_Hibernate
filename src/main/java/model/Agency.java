@@ -118,16 +118,7 @@ public class Agency implements Serializable{
 
     @Override
     public String toString() {
-        return "Agency{" +
-                "agency_name='" + agency_name + '\'' +
-                ", agency_type='" + agency_type + '\'' +
-                ", agency_abbreviation='" + agency_abbreviation + '\'' +
-                ", agency_administration='" + agency_administration + '\'' +
-                ", agency_founded=" + agency_founded +
-                ", agency_country='" + agency_country + '\'' +
-                ", agency_spacecraft='" + agency_spacecraft + '\'' +
-                ", agency_launchers='" + agency_launchers + '\'' +
-                ", agency_description='" + agency_description + '\'' +
-                '}';
+        return  "| " + agency_name + " | " + agency_type + " | " + agency_abbreviation +  " | " + agency_administration +  " | " + agency_founded +
+                " | " + agency_country +  " | " + agency_spacecraft +  " | " + agency_launchers +  " | " + agency_description + " |";
     }
 }
