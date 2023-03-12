@@ -8,19 +8,19 @@ import java.io.Serializable;
 @Table(name = "rocket")
 public class Rocket implements Serializable{
     @Id
-    @Column
+    @Column(name = "rocket_name")
     String rocket_name;
-    @Column
+    @Column(name = "rocket_family")
     String rocket_family;
-    @Column
+    @Column(name = "rocket_length")
     String rocket_length;
-    @Column
+    @Column(name = "rocket_diameter")
     String rocket_diameter;
-    @Column
+    @Column(name = "rocket_launch_mass")
     String rocket_launch_mass;
-    @Column
+    @Column(name = "rocket_low_earth_orbit_capacity")
     String rocket_low_earth_orbit_capacity;
-    @Column
+    @Column(name = "rocket_description")
     String rocket_description;
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "agency_name")

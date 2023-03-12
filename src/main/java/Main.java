@@ -1,43 +1,20 @@
-import java.io.IOException;
 import java.sql.Connection;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Scanner;
-
 import controller.*;
 import database.ConnectionFactory;
-import model.*;
 import org.hibernate.HibernateException;
 import org.hibernate.SessionFactory;
 import org.hibernate.boot.Metadata;
 import org.hibernate.boot.MetadataSources;
 import org.hibernate.boot.registry.StandardServiceRegistry;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
-import org.hibernate.cfg.Configuration;
-import org.hibernate.service.ServiceRegistry;
 import view.Menu;
-
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
-
 
 public class Main {
 
   static SessionFactory sessionFactoryObj;
-/*
-  private static SessionFactory buildSessionFactory() {
-    // Creating Configuration Instance & Passing Hibernate Configuration File
-    Configuration configObj = new Configuration();
-    configObj.configure("hibernate.cfg.xml");
-
-    // Since Hibernate Version 4.x, ServiceRegistry Is Being Used
-    ServiceRegistry serviceRegistryObj = new StandardServiceRegistryBuilder().applySettings(configObj.getProperties()).build();
-
-    // Creating Hibernate SessionFactory Instance
-    sessionFactoryObj = configObj.buildSessionFactory(serviceRegistryObj);
-    return sessionFactoryObj;
-  } */
 
   private static SessionFactory buildSessionFactory() {
     try {
