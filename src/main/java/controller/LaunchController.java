@@ -130,11 +130,11 @@ public class LaunchController {
     em.close();
   }
 
-  public void deleteLaunch(String location_name) {
+  public void deleteLaunch(String launch_title) {
     EntityManager em = entityManagerFactory.createEntityManager();
     em.getTransaction().begin();
-    Location location = (Location) em.find(Location.class, location_name);
-    em.remove(location);
+    Launch launch = (Launch) em.find(Launch.class, launch_title);
+    em.remove(launch);
     em.getTransaction().commit();
     em.close();
   }

@@ -1,6 +1,7 @@
 package view;
 
 import controller.DatabaseController;
+import controller.DeleteController;
 import controller.SelectController;
 
 import java.io.BufferedReader;
@@ -179,7 +180,7 @@ public class Menu {
      *
      * @return La opción elegida por el usuario.
      */
-    public int menuDeletes() throws SQLException {
+    public int menuDeletes(DeleteController deleteController) throws SQLException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         int option = 0;
         boolean cerrarSubmenu = false;
@@ -193,10 +194,11 @@ public class Menu {
             System.out.println("│  0 -      Cerrar     - 0  │");
             System.out.println("└───────────────────────────┘");
             try {
-                option = scannerInt("Elige una opción",0,2);
+                option = scannerInt("Elige una opción: ",0,2);
                 if (option >= 0 && option <= 2) {
                     switch (option){
                         case 1:
+                            deleteController.deleteMain();
                             break;
                         case 2:
                             break;

@@ -76,6 +76,7 @@ public class Main {
     RocketController rocketController = new RocketController(c, entityManagerFactory);
     DatabaseController databaseController = new DatabaseController(c, entityManagerFactory, agencyController, launchController, locationController, missionController, rocketController);
     SelectController selectController = new SelectController(c, entityManagerFactory, agencyController, launchController, locationController, missionController, rocketController);
+    DeleteController deleteController = new DeleteController(c, entityManagerFactory, selectController ,agencyController, launchController, locationController, missionController, rocketController);
 
     Menu menu = new Menu();
     int option;
@@ -93,7 +94,7 @@ public class Main {
           menu.menuUpdates();
           break;
         case 4:
-          menu.menuDeletes();
+          menu.menuDeletes(deleteController);
           break;
         case 0:
           System.out.println("Adiós... \uD83D\uDE80");
