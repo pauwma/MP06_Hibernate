@@ -3,13 +3,12 @@ package view;
 import controller.DatabaseController;
 import controller.DeleteController;
 import controller.SelectController;
+import controller.UpdateController;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.sql.Connection;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.Scanner;
 
 public class Menu {
@@ -140,7 +139,7 @@ public class Menu {
      *
      * @return La opción elegida por el usuario.
      */
-    public int menuUpdates() throws SQLException {
+    public int menuUpdates(UpdateController updateController) throws SQLException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         int option = 0;
         boolean cerrarSubmenu = false;
@@ -158,6 +157,7 @@ public class Menu {
                 if (option >= 0 && option <= 2) {
                     switch (option){
                         case 1:
+                            updateController.updateMain();
                             break;
                         case 2:
                             break;

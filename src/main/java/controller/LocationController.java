@@ -70,14 +70,14 @@ public class LocationController {
   }
 
   /* Method to UPDATE activity for an Magazine */
-  public void updateLocation(String location_name) {
+  public void updateLocation(Location location) {
     EntityManager em = entityManagerFactory.createEntityManager();
     em.getTransaction().begin();
-    Location location = (Location) em.find(Location.class, location_name);
     em.merge(location);
     em.getTransaction().commit();
     em.close();
   }
+
 
   /* Method to DELETE an Magazine from the records */
   public void deleteLocation(String location_name) {

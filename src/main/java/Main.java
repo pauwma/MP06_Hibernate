@@ -54,6 +54,7 @@ public class Main {
     DatabaseController databaseController = new DatabaseController(c, entityManagerFactory, agencyController, launchController, locationController, missionController, rocketController);
     SelectController selectController = new SelectController(c, entityManagerFactory, agencyController, launchController, locationController, missionController, rocketController);
     DeleteController deleteController = new DeleteController(c, entityManagerFactory, selectController ,agencyController, launchController, locationController, missionController, rocketController);
+    UpdateController updateController = new UpdateController(c, entityManagerFactory, selectController ,agencyController, launchController, locationController, missionController, rocketController);
 
     Menu menu = new Menu();
     int option;
@@ -68,7 +69,7 @@ public class Main {
           menu.menuSelects(selectController);
           break;
         case 3:
-          menu.menuUpdates();
+          menu.menuUpdates(updateController);
           break;
         case 4:
           menu.menuDeletes(deleteController);
