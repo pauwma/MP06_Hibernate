@@ -39,22 +39,25 @@ public class UpdateController {
                     List<Launch> launchList = launchController.listLaunch();
                     launchController.printLaunch(launchList);
                     int launchOption = scannerInt("¿Qué lanzamiento desea editar? (1-" + launchList.size() + "): ", 1, launchList.size());
-                    Launch launchToDelete = launchList.get(launchOption-1);
-                    launchController.deleteLaunch(launchToDelete.getLaunch_title());
+                    Launch launchToUpdate = launchList.get(launchOption-1);
+                    modifyObject(launchToUpdate);
+                    launchController.updateLaunch(launchToUpdate);
                     break;
                 case 2:
                     List<Rocket> rocketList = rocketController.listRocket();
                     rocketController.printRocket(rocketList);
                     int rocketOption = scannerInt("¿Qué cohete desea editar? (1-" + rocketList.size() + "): ", 1, rocketList.size());
-                    Rocket rocketToDelete = rocketList.get(rocketOption-1);
-                    rocketController.deleteRocket(rocketToDelete.getRocket_name());
+                    Rocket rocketToUpdate = rocketList.get(rocketOption-1);
+                    modifyObject(rocketToUpdate);
+                    rocketController.updateRocket(rocketToUpdate);
                     break;
                 case 3:
                     List<Agency> agencyList = agencyController.listAgency();
                     agencyController.printAgency(agencyList);
                     int agencyOption = scannerInt("¿Qué agencia desea editar? (1-" + agencyList.size() + "): ", 1, agencyList.size());
-                    Agency agencyToDelete = agencyList.get(agencyOption-1);
-                    agencyController.deleteAgency(agencyToDelete.getAgency_name());
+                    Agency agencyToUpdate = agencyList.get(agencyOption-1);
+                    modifyObject(agencyToUpdate);
+                    agencyController.updateAgency(agencyToUpdate);
                     break;
                 case 4:
                     List<Location> locationList = locationController.listLocation();
@@ -68,8 +71,9 @@ public class UpdateController {
                     List<Mission> missionList = missionController.listMission();
                     missionController.printMission(missionList);
                     int missionOption = scannerInt("¿Qué misión desea editar? (1-" + missionList.size() + "): ", 1, missionList.size());
-                    Mission missionToDelete = missionList.get(missionOption-1);
-                    missionController.deleteMission(missionToDelete.getMission_name());
+                    Mission missionToUpdate = missionList.get(missionOption-1);
+                    modifyObject(missionToUpdate);
+                    missionController.updateMission(missionToUpdate);
                     break;
                 case 0:
                     System.out.println("INFO - No se ha editado nada.");
@@ -83,21 +87,54 @@ public class UpdateController {
     }
 
 
-    public static void modifyObject(Object obj) {
+    public void modifyObject(Object obj) {
         Scanner scanner = new Scanner(System.in);
         Field[] fields = obj.getClass().getDeclaredFields();
         for (int i = 1; i < fields.length; i++) {
             Field field = fields[i];
-            System.out.print("Ingrese el valor para " + field.getName() + ": ");
-            String input = scanner.nextLine();
             try {
                 field.setAccessible(true);
                 if (field.getType() == int.class) {
+                    System.out.print("Ingrese el valor para " + field.getName() + ": ");
+                    String input = scanner.nextLine();
                     field.setInt(obj, Integer.parseInt(input));
                 } else if (field.getType() == double.class) {
+                    System.out.print("Ingrese el valor para " + field.getName() + ": ");
+                    String input = scanner.nextLine();
                     field.setDouble(obj, Double.parseDouble(input));
                 } else if (field.getType() == String.class) {
+                    System.out.print("Ingrese el valor para " + field.getName() + ": ");
+                    String input = scanner.nextLine();
                     field.set(obj, input);
+                } else if (field.getType() == Location.class) {
+                    List<Location> locationList = locationController.listLocation();
+                    locationController.printLocation(locationList);
+                    int locationOption = scannerInt("¿Qué ubicación desea asignar al campo " + field.getName() + "? (1-" + locationList.size() + "): ", 1, locationList.size());
+                    Location location = locationList.get(locationOption-1);
+                    field.set(obj, location);
+                    System.out.println("Ubicación asignada: " + location.getLocationName());
+
+                } else if (field.getType() == Agency.class) {
+                    List<Agency> agencyList = agencyController.listAgency();
+                    agencyController.printAgency(agencyList);
+                    int agencyOption = scannerInt("¿Qué agencia desea asignar al campo " + field.getName() + "? (1-" + agencyList.size() + "): ", 1, agencyList.size());
+                    Agency agency = agencyList.get(agencyOption-1);
+                    field.set(obj, agency);
+                    System.out.println("Agencia asignada: " + agency.getAgency_name());
+                } else if (field.getType() == Rocket.class) {
+                    List<Rocket> rocketList = rocketController.listRocket();
+                    rocketController.printRocket(rocketList);
+                    int rocketOption = scannerInt("¿Qué cohete desea asignar al campo " + field.getName() + "? (1-" + rocketList.size() + "): ", 1, rocketList.size());
+                    Rocket rocket = rocketList.get(rocketOption-1);
+                    field.set(obj, rocket);
+                    System.out.println("Cohete asignado: " + rocket.getRocket_name());
+                } else if (field.getType() == Mission.class) {
+                    List<Mission> missionList = missionController.listMission();
+                    missionController.printMission(missionList);
+                    int missionOption = scannerInt("¿Qué misión desea asignar al campo " + field.getName() + "? (1-" + missionList.size() + "): ", 1, missionList.size());
+                    Mission mission = missionList.get(missionOption-1);
+                    field.set(obj, mission);
+                    System.out.println("Misión asignada: " + mission.getMission_name());
                 } else {
                     System.out.println("Tipo de dato no soportado: " + field.getType());
                 }

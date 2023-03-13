@@ -93,10 +93,9 @@ public class RocketController {
     return result;
   }
 
-  public void updateRocket(String rocket_name) {
+  public void updateRocket(Rocket rocket) {
     EntityManager em = entityManagerFactory.createEntityManager();
     em.getTransaction().begin();
-    Rocket rocket = (Rocket) em.find(Rocket.class, rocket_name);
     em.merge(rocket);
     em.getTransaction().commit();
     em.close();

@@ -121,11 +121,10 @@ public class LaunchController {
     return result;
   }
 
-  public void updateLaunch(String location_name) {
+  public void updateLaunch(Launch launch) {
     EntityManager em = entityManagerFactory.createEntityManager();
     em.getTransaction().begin();
-    Location location = (Location) em.find(Location.class, location_name);
-    em.merge(location);
+    em.merge(launch);
     em.getTransaction().commit();
     em.close();
   }

@@ -89,11 +89,10 @@ public class MissionController {
     return result;
   }
 
-  public void updateMission(String location_name) {
+  public void updateMission(Mission mission) {
     EntityManager em = entityManagerFactory.createEntityManager();
     em.getTransaction().begin();
-    Location location = (Location) em.find(Location.class, location_name);
-    em.merge(location);
+    em.merge(mission);
     em.getTransaction().commit();
     em.close();
   }

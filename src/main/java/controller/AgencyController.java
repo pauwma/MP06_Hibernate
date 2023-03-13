@@ -85,10 +85,9 @@ public class AgencyController {
     return result;
   }
 
-  public void updateAgency(String agency_name) {
+  public void updateAgency(Agency agency) {
     EntityManager em = entityManagerFactory.createEntityManager();
     em.getTransaction().begin();
-    Agency agency = (Agency) em.find(Agency.class, agency_name);
     em.merge(agency);
     em.getTransaction().commit();
     em.close();
