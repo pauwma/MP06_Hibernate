@@ -25,7 +25,6 @@ public class SelectController {
     }
 
     public void selectMain() {
-        Scanner scanner = new Scanner(System.in);
         int option = scannerInt("Ingrese en que tabla quiere buscar (1: launch, 2: rocket, 3: agency, 4: location, 5: mission): ",1,5);
 
         try {
@@ -53,6 +52,33 @@ public class SelectController {
         }
     }
 
+    public void selectText(){
+        int option = scannerInt("Ingrese en que tabla quiere buscar (1: launch, 2: rocket, 3: agency, 4: location, 5: mission): ",1,5);
+        String searchText = scannerString("Ingrese el texto de búsqueda: ");
+        try {
+            switch (option) {
+                case 1:
+                    launchController.printLaunch(launchController.searchLaunch(searchText));
+                    break;
+                case 2:
+                    rocketController.printRocket(rocketController.searchRocket(searchText));
+                    break;
+                case 3:
+                    agencyController.printAgency(agencyController.searchAgency(searchText));
+                    break;
+                case 4:
+                    locationController.printLocation(locationController.searchLocation(searchText));
+                    break;
+                case 5:
+                    missionController.printMission(missionController.searchMission(searchText));
+                    break;
+                default:
+                    System.out.println("ERROR - Opción no válida.");
+            }
+        } catch (Exception e){
+            System.out.println("ERROR - No se ha encontado nada con \"" + searchText + "\".");
+        }
+    }
 
     /**
      * Método para preguntar al usuario por un String con excepciones.

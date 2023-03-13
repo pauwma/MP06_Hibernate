@@ -2,6 +2,7 @@ package controller;
 
 import model.Agency;
 import model.Location;
+import model.Mission;
 import model.Rocket;
 
 import javax.persistence.*;
@@ -115,5 +116,19 @@ public class RocketController {
     for (Rocket rocket : rocketList){
       addRocket(rocket);
     }
+  }
+
+  public List<Rocket> searchRocket(String searchText) {
+    try {
+      EntityManager em = entityManagerFactory.createEntityManager();
+      em.getTransaction().begin();
+      TypedQuery<Rocket> query = em.createQuery("FROM Rocket r WHERE r.rocket_name LIKE :searchText OR r.rocket_family LIKE :searchText OR r.rocket_length LIKE :searchText OR r.rocket_diameter LIKE :searchText OR r.rocket_launch_mass LIKE :searchText OR r.rocket_low_earth_orbit_capacity LIKE :searchText OR r.rocket_description LIKE :searchText", Rocket.class);
+      query.setParameter("searchText", "%" + searchText + "%");
+      List<Rocket> results = query.getResultList();
+      em.getTransaction().commit();
+      em.close();
+      return results;
+    } catch (Exception e){}
+    return null;
   }
 }

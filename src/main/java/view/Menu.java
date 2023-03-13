@@ -117,6 +117,7 @@ public class Menu {
                             selectController.selectMain();
                             break;
                         case 2:
+                            selectController.selectText();
                             break;
                         case 3:
                             break;

@@ -1,8 +1,10 @@
 package controller;
 
+import model.Agency;
 import model.Location;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
+import javax.persistence.TypedQuery;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
@@ -94,6 +96,20 @@ public class LocationController {
     for (Location location : locationList){
       addLocation(location);
     }
+  }
+
+  public List<Location> searchLocation(String searchText) {
+    try {
+      EntityManager em = entityManagerFactory.createEntityManager();
+      em.getTransaction().begin();
+      TypedQuery<Location> query = em.createQuery("FROM Location l WHERE l.location_name LIKE :searchText OR l.location_location LIKE :searchText OR l.rockets_launched LIKE :searchText", Location.class);
+      query.setParameter("searchText", "%" + searchText + "%");
+      List<Location> results = query.getResultList();
+      em.getTransaction().commit();
+      em.close();
+      return results;
+    } catch (Exception e){}
+    return null;
   }
 
 }

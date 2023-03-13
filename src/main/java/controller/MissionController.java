@@ -4,6 +4,7 @@ import model.Agency;
 import model.Location;
 import model.Mission;
 import model.Rocket;
+import org.hibernate.Session;
 
 import javax.persistence.*;
 import java.io.BufferedReader;
@@ -111,5 +112,19 @@ public class MissionController {
     for (Mission mission : missionList){
       addMission(mission);
     }
+  }
+
+  public List<Mission> searchMission(String searchText) {
+    try {
+      EntityManager em = entityManagerFactory.createEntityManager();
+      em.getTransaction().begin();
+      TypedQuery<Mission> query = em.createQuery("FROM Mission m WHERE m.mission_name LIKE :searchText OR mission_type LIKE :searchText OR mission_launch_cost LIKE :searchText OR mission_description LIKE :searchText OR rocket_name LIKE :searchText", Mission.class);
+      query.setParameter("searchText", "%" + searchText + "%");
+      List<Mission> results = query.getResultList();
+      em.getTransaction().commit();
+      em.close();
+      return results;
+    } catch (Exception e){}
+    return null;
   }
 }

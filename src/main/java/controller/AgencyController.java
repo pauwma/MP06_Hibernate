@@ -2,10 +2,12 @@ package controller;
 
 import model.Agency;
 import model.Location;
+import model.Rocket;
 
 import javax.persistence.Column;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
+import javax.persistence.TypedQuery;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
@@ -109,29 +111,17 @@ public class AgencyController {
     }
   }
 
-  // TODO
-  public static void modifyObject(Object obj) {
-    System.out.println(obj.toString());
-    Scanner scanner = new Scanner(System.in);
-    Field[] fields = obj.getClass().getDeclaredFields();
-    for (Field field : fields) {
-      System.out.print("Ingrese el valor para " + field.getName() + ": ");
-      String input = scanner.nextLine();
-      try {
-        field.setAccessible(true);
-        if (field.getType() == int.class) {
-          field.setInt(obj, Integer.parseInt(input));
-        } else if (field.getType() == double.class) {
-          field.setDouble(obj, Double.parseDouble(input));
-        } else if (field.getType() == String.class) {
-          field.set(obj, input);
-        } else {
-          System.out.println("Tipo de dato no soportado: " + field.getType());
-        }
-      } catch (IllegalAccessException e) {
-        e.printStackTrace();
-      }
-    }
-    System.out.println(obj.toString());
+  public List<Agency> searchAgency(String searchText) {
+    try {
+      EntityManager em = entityManagerFactory.createEntityManager();
+      em.getTransaction().begin();
+      TypedQuery<Agency> query = em.createQuery("FROM Agency a WHERE a.agency_name LIKE :searchText OR a.agency_type LIKE :searchText OR a.agency_abbreviation LIKE :searchText OR a.agency_administration LIKE :searchText OR a.agency_founded LIKE :searchText OR a.agency_country LIKE :searchText OR a.agency_spacecraft LIKE :searchText OR a.agency_launchers LIKE :searchText OR a.agency_description LIKE :searchText", Agency.class);
+      query.setParameter("searchText", "%" + searchText + "%");
+      List<Agency> results = query.getResultList();
+      em.getTransaction().commit();
+      em.close();
+      return results;
+    } catch (Exception e){}
+    return null;
   }
 }
