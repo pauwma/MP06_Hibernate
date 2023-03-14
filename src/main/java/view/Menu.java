@@ -20,6 +20,11 @@ public class Menu {
         super();
     }
 
+    /**
+     * Muestra el menú principal de la aplicación.
+     *
+     * @return La opción elegida por el usuario.
+     */
     public int mainMenu() {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         boolean validOption = false;
@@ -161,6 +166,7 @@ public class Menu {
                             updateController.updateMain();
                             break;
                         case 2:
+                            updateController.updateCondition();
                             break;
                         case 0:
                             cerrarSubmenu = true;

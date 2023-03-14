@@ -22,6 +22,11 @@ public class MissionController {
 
   private RocketController rocketController = new RocketController(connection, entityManagerFactory);
 
+  /**
+   Constructor de la clase.
+   Crea un nuevo objeto de controlador de Mission con una conexión dada.
+   @param connection La conexión a la base de datos que se utilizará.
+   */
   public MissionController(Connection connection) {
     this.connection = connection;
   }

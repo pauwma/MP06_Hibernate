@@ -16,6 +16,11 @@ public class LocationController {
   private Connection connection;
   private EntityManagerFactory entityManagerFactory;
 
+  /**
+   Constructor de la clase.
+   Crea un nuevo objeto de controlador de Location con una conexión dada.
+   @param connection La conexión a la base de datos que se utilizará.
+   */
   public LocationController(Connection connection) {
     this.connection = connection;
   }

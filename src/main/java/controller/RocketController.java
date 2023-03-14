@@ -21,6 +21,11 @@ public class RocketController {
 
   private AgencyController agencyController;
 
+  /**
+   Constructor de la clase.
+   Crea un nuevo objeto de controlador de Rocket con una conexión dada.
+   @param connection La conexión a la base de datos que se utilizará.
+   */
   public RocketController(Connection connection) {
     this.connection = connection;
   }

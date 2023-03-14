@@ -17,6 +17,18 @@ public class DeleteController {
     private MissionController missionController;
     private RocketController rocketController;
 
+    /**
+     * Constructor de la clase DeleteController.
+     *
+     * @param connection Conexión a la base de datos.
+     * @param entityManagerFactory Fabrica de EntityManager para realizar operaciones con la base de datos.
+     * @param selectController Controlador para listar registros de la base de datos.
+     * @param agencyController Controlador para realizar operaciones con la tabla de agencias.
+     * @param launchController Controlador para realizar operaciones con la tabla de lanzamientos.
+     * @param locationController Controlador para realizar operaciones con la tabla de ubicaciones.
+     * @param missionController Controlador para realizar operaciones con la tabla de misiones.
+     * @param rocketController Controlador para realizar operaciones con la tabla de cohetes.
+     */
     public DeleteController(Connection connection, EntityManagerFactory entityManagerFactory, SelectController selectController, AgencyController agencyController, LaunchController launchController, LocationController locationController, MissionController missionController, RocketController rocketController) {
         this.connection = connection;
         this.selectController = selectController;
@@ -28,6 +40,9 @@ public class DeleteController {
         this.rocketController =  rocketController;
     }
 
+    /**
+     * Método principal para eliminar registros de la base de datos.
+     */
     public void deleteMain() {
         Scanner scanner = new Scanner(System.in);
         int option = scannerInt("Ingrese en qué tabla desea eliminar (1: launch, 2: rocket, 3: agency, 4: location, 5: mission): ",1,5);

@@ -23,6 +23,17 @@ public class DatabaseController {
     private MissionController missionController;
     private RocketController rocketController;
 
+    /**
+     * Constructor de la clase DatabaseController.
+     *
+     * @param connection Conexión a la base de datos.
+     * @param entityManagerFactory Fabrica de EntityManager para realizar operaciones con la base de datos.
+     * @param agencyController Controlador para realizar operaciones con la tabla de agencias.
+     * @param launchController Controlador para realizar operaciones con la tabla de lanzamientos.
+     * @param locationController Controlador para realizar operaciones con la tabla de ubicaciones.
+     * @param missionController Controlador para realizar operaciones con la tabla de misiones.
+     * @param rocketController Controlador para realizar operaciones con la tabla de cohetes.
+     */
     public DatabaseController(Connection connection, EntityManagerFactory entityManagerFactory, AgencyController agencyController, LaunchController launchController, LocationController locationController, MissionController missionController, RocketController rocketController) {
         this.connection = connection;
         this.entityManagerFactory = entityManagerFactory;

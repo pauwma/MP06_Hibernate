@@ -17,20 +17,42 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
+/**
+ Esta clase es el controlador para la entidad de Agencia en el sistema.
+ Maneja la lectura, adición, actualización y eliminación de Agencias.
+ También proporciona funciones de búsqueda y listado de todas las Agencias.
+ */
 public class AgencyController {
 
   private Connection connection;
   private EntityManagerFactory entityManagerFactory;
 
+  /**
+   Constructor de la clase.
+   Crea un nuevo objeto de controlador de Agency con una conexión dada.
+   @param connection La conexión a la base de datos que se utilizará.
+   */
   public AgencyController(Connection connection) {
     this.connection = connection;
   }
 
+  /**
+   Constructor de la clase.
+   Crea un nuevo objeto de controlador de Agencia con una conexión y un EntityManagerFactory dados.
+   @param connection La conexión a la base de datos que se utilizará.
+   @param entityManagerFactory El EntityManagerFactory que se utilizará para crear EntityManagers.
+   */
   public AgencyController(Connection connection, EntityManagerFactory entityManagerFactory) {
     this.connection = connection;
     this.entityManagerFactory = entityManagerFactory;
   }
 
+  /**
+   Lee un archivo de texto que contiene datos de Agencias y devuelve una lista de Agencias.
+   @param filename El nombre del archivo de texto que se va a leer.
+   @return Una lista de Agencias leídas del archivo de texto.
+   @throws IOException Si ocurre un error de entrada/salida al leer el archivo.
+   */
   public List<Agency> readAgencyFile(String filename) throws IOException {
     String agency_name;
     String agency_type;
@@ -63,12 +85,20 @@ public class AgencyController {
     return agencyList;
   }
 
+  /**
+   Imprime una lista de Agencias dada en la consola.
+   @param agencyList La lista de Agencias que se va a imprimir.
+   */
   public void printAgency(List<Agency> agencyList) {
     for (int i = 0; i < agencyList.size(); i++) {
       System.out.println((i+1) +  " " + agencyList.get(i).toString());
     }
   }
 
+  /**
+   Agrega una agencia a la base de datos.
+   @param agency objeto de la clase Agency que representa la agencia a agregar
+   */
   public void addAgency(Agency agency) {
     EntityManager em = entityManagerFactory.createEntityManager();
     em.getTransaction().begin();
@@ -77,6 +107,10 @@ public class AgencyController {
     em.close();
   }
 
+  /**
+   Retorna una lista con todas las agencias almacenadas en la base de datos.
+   @return lista de objetos de la clase Agency que representan todas las agencias almacenadas
+   */
   public List<Agency> listAgency() {
     EntityManager em = entityManagerFactory.createEntityManager();
     em.getTransaction().begin();
@@ -87,6 +121,10 @@ public class AgencyController {
     return result;
   }
 
+  /**
+   Actualiza una agencia ya almacenada en la base de datos.
+   @param agency objeto de la clase Agency que representa la agencia a actualizar
+   */
   public void updateAgency(Agency agency) {
     EntityManager em = entityManagerFactory.createEntityManager();
     em.getTransaction().begin();
@@ -95,6 +133,10 @@ public class AgencyController {
     em.close();
   }
 
+  /**
+   Elimina una agencia de la base de datos.
+   @param agency_name el nombre de la agencia a eliminar
+   */
   public void deleteAgency(String agency_name) {
     EntityManager em = entityManagerFactory.createEntityManager();
     em.getTransaction().begin();
@@ -104,6 +146,10 @@ public class AgencyController {
     em.close();
   }
 
+  /**
+   Lee un archivo de texto que contiene información de agencias y las agrega a la base de datos.
+   @throws IOException si ocurre un error al leer el archivo
+   */
   public void insertAgencyList() throws IOException {
     List<Agency> agencyList = readAgencyFile("src/main/resources/agency.txt");
     for (Agency agency : agencyList){
@@ -111,6 +157,11 @@ public class AgencyController {
     }
   }
 
+  /**
+   Busca todas las agencias que contengan un texto dado en alguno de sus atributos y las retorna en una lista.
+   @param searchText el texto a buscar en los atributos de las agencias
+   @return lista de objetos de la clase Agency que representan las agencias encontradas
+   */
   public List<Agency> searchAgency(String searchText) {
     try {
       EntityManager em = entityManagerFactory.createEntityManager();

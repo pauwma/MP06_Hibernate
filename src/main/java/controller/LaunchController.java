@@ -22,8 +22,11 @@ public class LaunchController {
   private MissionController missionController;
   private RocketController rocketController;
 
-
-
+  /**
+   Constructor de la clase.
+   Crea un nuevo objeto de controlador de Launch con una conexión dada.
+   @param connection La conexión a la base de datos que se utilizará.
+   */
   public LaunchController(Connection connection) {
     this.connection = connection;
   }
@@ -149,7 +152,7 @@ public class LaunchController {
   public List<Launch> searchLaunch(String searchText) {
     EntityManager em = entityManagerFactory.createEntityManager();
     em.getTransaction().begin();
-    TypedQuery<Launch> query = em.createQuery("FROM Launch l WHERE l.launch_title LIKE :searchText OR l.launch_status LIKE :searchText OR l.launch_date LIKE :searchText OR l.rocket.rocket_name LIKE :searchText OR l.agency.agency_name LIKE :searchText OR l.location.location_name LIKE :searchText OR l.mission.mission_name LIKE :searchText", Launch.class);
+    TypedQuery<Launch> query = em.createQuery("FROM Launch l WHERE l.rocket.rocket_name LIKE :searchText OR l.agency.agency_name LIKE :searchText OR l.location.location_name LIKE :searchText OR l.mission.mission_name LIKE :searchText", Launch.class);
     query.setParameter("searchText", "%" + searchText + "%");
     List<Launch> results = query.getResultList();
     em.getTransaction().commit();

@@ -1,7 +1,10 @@
 package controller;
 
+import model.Launch;
+
 import javax.persistence.EntityManagerFactory;
 import java.sql.Connection;
+import java.util.List;
 import java.util.Scanner;
 
 public class SelectController {
@@ -14,6 +17,17 @@ public class SelectController {
     private MissionController missionController;
     private RocketController rocketController;
 
+    /**
+     * Constructor de la clase SelectController.
+     *
+     * @param connection Conexión a la base de datos.
+     * @param entityManagerFactory Fabrica de EntityManager para realizar operaciones con la base de datos.
+     * @param agencyController Controlador para realizar operaciones con la tabla de agencias.
+     * @param launchController Controlador para realizar operaciones con la tabla de lanzamientos.
+     * @param locationController Controlador para realizar operaciones con la tabla de ubicaciones.
+     * @param missionController Controlador para realizar operaciones con la tabla de misiones.
+     * @param rocketController Controlador para realizar operaciones con la tabla de cohetes.
+     */
     public SelectController(Connection connection, EntityManagerFactory entityManagerFactory, AgencyController agencyController, LaunchController launchController, LocationController locationController, MissionController missionController, RocketController rocketController) {
         this.connection = connection;
         this.entityManagerFactory = entityManagerFactory;
@@ -24,6 +38,9 @@ public class SelectController {
         this.rocketController =  rocketController;
     }
 
+    /**
+     * Método principal para listar registros de la base de datos.
+     */
     public void selectMain() {
         int option = scannerInt("Ingrese en que tabla quiere buscar (1: launch, 2: rocket, 3: agency, 4: location, 5: mission): ",1,5);
 
@@ -52,10 +69,22 @@ public class SelectController {
         }
     }
 
+    /**
+     Esta función permite seleccionar una tabla de la base de datos y buscar un texto en ella.
+     La función solicita al usuario que ingrese el número de la tabla que desea buscar y el texto que desea buscar.
+     Luego, realiza una búsqueda en la tabla seleccionada utilizando el controlador correspondiente.
+     Si se encuentra un resultado, se imprime en la consola utilizando el método "print" del controlador correspondiente.
+     Si no se encuentra ningún resultado, se imprime un mensaje de error.
+
+     @throws Exception Si no se encuentra ningún resultado.
+     */
     public void selectText(){
+        // Solicita al usuario que ingrese el número de la tabla que desea buscar
         int option = scannerInt("Ingrese en que tabla quiere buscar (1: launch, 2: rocket, 3: agency, 4: location, 5: mission): ",1,5);
+        // Solicita al usuario que ingrese el texto que desea buscar
         String searchText = scannerString("Ingrese el texto de búsqueda: ");
         try {
+            // Realiza una búsqueda en la tabla seleccionada utilizando el controlador correspondiente.
             switch (option) {
                 case 1:
                     launchController.printLaunch(launchController.searchLaunch(searchText));
@@ -76,7 +105,18 @@ public class SelectController {
                     System.out.println("ERROR - Opción no válida.");
             }
         } catch (Exception e){
+            // Si no se encuentra ningún resultado, se imprime un mensaje de error.
             System.out.println("ERROR - No se ha encontado nada con \"" + searchText + "\".");
+        }
+    }
+
+    public List<Launch> selectTextParam(String searchText){
+        try {
+            return launchController.searchLaunch(searchText);
+        } catch (Exception e){
+            // Si no se encuentra ningún resultado, se imprime un mensaje de error.
+            System.out.println("ERROR - No se ha encontado nada con \"" + searchText + "\".");
+            return null;
         }
     }
 
