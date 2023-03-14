@@ -11,6 +11,11 @@ import java.io.IOException;
 import java.sql.Connection;
 import java.util.*;
 
+/**
+ Esta clase es el controlador para la entidad de Location en el sistema.
+ Maneja la lectura, adición, actualización y eliminación de Location.
+ También proporciona funciones de búsqueda y listado de todas las Location.
+ */
 public class LocationController {
 
   private Connection connection;
@@ -25,11 +30,23 @@ public class LocationController {
     this.connection = connection;
   }
 
+  /**
+   Constructor de la clase.
+   Crea un nuevo objeto de controlador de Location con una conexión y un EntityManagerFactory dados.
+   @param connection La conexión a la base de datos que se utilizará.
+   @param entityManagerFactory El EntityManagerFactory que se utilizará para crear EntityManagers.
+   */
   public LocationController(Connection connection, EntityManagerFactory entityManagerFactory) {
     this.connection = connection;
     this.entityManagerFactory = entityManagerFactory;
   }
 
+  /**
+   Lee un archivo de texto que contiene datos de Location y devuelve una lista de Location.
+   @param filename El nombre del archivo de texto que se va a leer.
+   @return Una lista de Location leídas del archivo de texto.
+   @throws IOException Si ocurre un error de entrada/salida al leer el archivo.
+   */
   public List<Location> readLocationFile(String filename) throws IOException {
     String location_name;
     String location_location;
@@ -50,13 +67,20 @@ public class LocationController {
     return locationList;
   }
 
+  /**
+   Imprime una lista de Location dada en la consola.
+   @param locationList La lista de Location que se va a imprimir.
+   */
   public void printLocation(List<Location> locationList) {
     for (int i = 0; i < locationList.size(); i++) {
       System.out.println((i+1) + " " + locationList.get(i).toString());
     }
   }
 
-  /* Method to CREATE a Magazine  in the database */
+  /**
+   Agrega una Location a la base de datos.
+   @param location objeto de la clase Location que representa la Location a agregar
+   */
   public void addLocation(Location location) {
     EntityManager em = entityManagerFactory.createEntityManager();
     em.getTransaction().begin();
@@ -65,7 +89,10 @@ public class LocationController {
     em.close();
   }
 
-  /* Method to READ all Magazines */
+  /**
+   Retorna una lista con todas las Location almacenadas en la base de datos.
+   @return lista de objetos de la clase Location que representan todas las Location almacenadas
+   */
   public List<Location> listLocation() {
     EntityManager em = entityManagerFactory.createEntityManager();
     em.getTransaction().begin();
@@ -76,7 +103,10 @@ public class LocationController {
     return result;
   }
 
-  /* Method to UPDATE activity for an Magazine */
+  /**
+   Actualiza una Location ya almacenada en la base de datos.
+   @param location objeto de la clase Location que representa la Location a actualizar
+   */
   public void updateLocation(Location location) {
     EntityManager em = entityManagerFactory.createEntityManager();
     em.getTransaction().begin();
@@ -85,8 +115,10 @@ public class LocationController {
     em.close();
   }
 
-
-  /* Method to DELETE an Magazine from the records */
+  /**
+   Elimina una Location de la base de datos.
+   @param location_name el nombre de la Location a eliminar
+   */
   public void deleteLocation(String location_name) {
     EntityManager em = entityManagerFactory.createEntityManager();
     em.getTransaction().begin();
@@ -96,6 +128,10 @@ public class LocationController {
     em.close();
   }
 
+  /**
+   Lee un archivo de texto que contiene información de Location y las agrega a la base de datos.
+   @throws IOException si ocurre un error al leer el archivo
+   */
   public void insertLocationList() throws IOException {
     List<Location> locationList = readLocationFile("src/main/resources/location.txt");
     for (Location location : locationList){
@@ -103,6 +139,11 @@ public class LocationController {
     }
   }
 
+  /**
+   Busca todas las Location que contengan un texto dado en alguno de sus atributos y las retorna en una lista.
+   @param searchText el texto a buscar en los atributos de las Location
+   @return lista de objetos de la clase Location que representan las Location encontradas
+   */
   public List<Location> searchLocation(String searchText) {
     try {
       EntityManager em = entityManagerFactory.createEntityManager();

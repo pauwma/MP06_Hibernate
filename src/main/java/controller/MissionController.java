@@ -15,6 +15,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.StringTokenizer;
 
+/**
+ Esta clase es el controlador para la entidad de Mission en el sistema.
+ Maneja la lectura, adición, actualización y eliminación de Mission.
+ También proporciona funciones de búsqueda y listado de todas las Mission.
+ */
 public class MissionController {
 
   private Connection connection;
@@ -31,12 +36,24 @@ public class MissionController {
     this.connection = connection;
   }
 
+  /**
+   Constructor de la clase.
+   Crea un nuevo objeto de controlador de Location con una conexión y un EntityManagerFactory dados.
+   @param connection La conexión a la base de datos que se utilizará.
+   @param entityManagerFactory El EntityManagerFactory que se utilizará para crear EntityManagers.
+   */
   public MissionController(Connection connection, EntityManagerFactory entityManagerFactory) {
     this.connection = connection;
     this.entityManagerFactory = entityManagerFactory;
     this.rocketController = new RocketController(connection, entityManagerFactory);
   }
 
+  /**
+   Lee un archivo de texto que contiene datos de Mission y devuelve una lista de Mission.
+   @param filename El nombre del archivo de texto que se va a leer.
+   @return Una lista de Mission leídas del archivo de texto.
+   @throws IOException Si ocurre un error de entrada/salida al leer el archivo.
+   */
   public List<Mission> readMissionFile(String filename) throws IOException {
     String mission_name;
     String mission_type;
@@ -71,12 +88,20 @@ public class MissionController {
     return missionList;
   }
 
-  public void printMission(List<Mission> locationList) {
-    for (int i = 0; i < locationList.size(); i++) {
-      System.out.println((i+1) + " " + locationList.get(i).toString());
+  /**
+   Imprime una lista de Mission dada en la consola.
+   @param missionList La lista de Mission que se va a imprimir.
+   */
+  public void printMission(List<Mission> missionList) {
+    for (int i = 0; i < missionList.size(); i++) {
+      System.out.println((i+1) + " " + missionList.get(i).toString());
     }
   }
 
+  /**
+   Agrega una Mission a la base de datos.
+   @param mission objeto de la clase Mission que representa la agencia a Mission
+   */
   public void addMission(Mission mission) {
     EntityManager em = entityManagerFactory.createEntityManager();
     em.getTransaction().begin();
@@ -85,6 +110,10 @@ public class MissionController {
     em.close();
   }
 
+  /**
+   Retorna una lista con todas las Mission almacenadas en la base de datos.
+   @return lista de objetos de la clase Mission que representan todas las Mission almacenadas
+   */
   public List<Mission> listMission() {
     EntityManager em = entityManagerFactory.createEntityManager();
     em.getTransaction().begin();
@@ -95,6 +124,10 @@ public class MissionController {
     return result;
   }
 
+  /**
+   Actualiza una Mission ya almacenada en la base de datos.
+   @param mission objeto de la clase Mission que representa la Mission a actualizar
+   */
   public void updateMission(Mission mission) {
     EntityManager em = entityManagerFactory.createEntityManager();
     em.getTransaction().begin();
@@ -103,6 +136,10 @@ public class MissionController {
     em.close();
   }
 
+  /**
+   Elimina una Mission de la base de datos.
+   @param location_name el nombre de la Mission a eliminar
+   */
   public void deleteMission(String location_name) {
     EntityManager em = entityManagerFactory.createEntityManager();
     em.getTransaction().begin();
@@ -112,6 +149,10 @@ public class MissionController {
     em.close();
   }
 
+  /**
+   Lee un archivo de texto que contiene información de Mission y las agrega a la base de datos.
+   @throws IOException si ocurre un error al leer el archivo
+   */
   public void insertMissionList() throws IOException {
     List<Mission> missionList = readMissionFile("src/main/resources/mission.txt");
     for (Mission mission : missionList){
@@ -119,6 +160,11 @@ public class MissionController {
     }
   }
 
+  /**
+   Busca todas las Mission que contengan un texto dado en alguno de sus atributos y las retorna en una lista.
+   @param searchText el texto a buscar en los atributos de las Mission
+   @return lista de objetos de la clase Mission que representan las Mission encontradas
+   */
   public List<Mission> searchMission(String searchText) {
     try {
       EntityManager em = entityManagerFactory.createEntityManager();

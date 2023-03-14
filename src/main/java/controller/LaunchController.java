@@ -13,6 +13,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.StringTokenizer;
 
+/**
+ Esta clase es el controlador para la entidad de Launch en el sistema.
+ Maneja la lectura, adición, actualización y eliminación de Launchs.
+ También proporciona funciones de búsqueda y listado de todos los Launch.
+ */
 public class LaunchController {
 
   private Connection connection;
@@ -31,6 +36,12 @@ public class LaunchController {
     this.connection = connection;
   }
 
+  /**
+   Constructor de la clase.
+   Crea un nuevo objeto de controlador de Launch con una conexión y un EntityManagerFactory dados.
+   @param connection La conexión a la base de datos que se utilizará.
+   @param entityManagerFactory El EntityManagerFactory que se utilizará para crear EntityManagers.
+   */
   public LaunchController(Connection connection, EntityManagerFactory entityManagerFactory) {
     this.connection = connection;
     this.entityManagerFactory = entityManagerFactory;
@@ -41,6 +52,12 @@ public class LaunchController {
 
   }
 
+  /**
+   Lee un archivo de texto que contiene datos de Laucnh y devuelve una lista de Launch.
+   @param filename El nombre del archivo de texto que se va a leer.
+   @return Una lista de Launch leídas del archivo de texto.
+   @throws IOException Si ocurre un error de entrada/salida al leer el archivo.
+   */
   public List<Launch> readLaunchFile(String filename) throws IOException {
     String launch_title = "";
     String launch_status = "";
@@ -102,12 +119,20 @@ public class LaunchController {
     return launchList;
   }
 
+  /**
+   Imprime una lista de Launch dada en la consola.
+   @param launchList La lista de Launch que se va a imprimir.
+   */
   public void printLaunch(List<Launch> launchList) {
     for (int i = 0; i < launchList.size(); i++) {
       System.out.println((i+1)+ " " +launchList.get(i).toString());
     }
   }
 
+  /**
+   Agrega un Launch a la base de datos.
+   @param launch objeto de la clase Launch que representa el Launch a agregar
+   */
   public void addLaunch(Launch launch) {
     EntityManager em = entityManagerFactory.createEntityManager();
     em.getTransaction().begin();
@@ -116,6 +141,10 @@ public class LaunchController {
     em.close();
   }
 
+  /**
+   Retorna una lista con todos los Launch almacenados en la base de datos.
+   @return lista de objetos de la clase Launch que representan todos los Launch almacenados
+   */
   public List<Launch> listLaunch() {
     EntityManager em = entityManagerFactory.createEntityManager();
     em.getTransaction().begin();
@@ -125,6 +154,10 @@ public class LaunchController {
     return result;
   }
 
+  /**
+   Actualiza un Launch ya almacenada en la base de datos.
+   @param launch objeto de la clase Launch que representa el Launch a actualizar
+   */
   public void updateLaunch(Launch launch) {
     EntityManager em = entityManagerFactory.createEntityManager();
     em.getTransaction().begin();
@@ -133,6 +166,10 @@ public class LaunchController {
     em.close();
   }
 
+  /**
+   Elimina un Launch de la base de datos.
+   @param launch_title el nombre del Launch a eliminar
+   */
   public void deleteLaunch(String launch_title) {
     EntityManager em = entityManagerFactory.createEntityManager();
     em.getTransaction().begin();
@@ -142,13 +179,22 @@ public class LaunchController {
     em.close();
   }
 
-    public void insertLaunchList() throws IOException {
+  /**
+   Lee un archivo de texto que contiene información de Launch y los agrega a la base de datos.
+   @throws IOException si ocurre un error al leer el archivo
+   */
+  public void insertLaunchList() throws IOException {
       List<Launch> launchList = readLaunchFile("src/main/resources/launch.txt");
       for (Launch launch : launchList){
         addLaunch(launch);
       }
     }
 
+  /**
+   Busca todos los Launch que contengan un texto dado en alguno de sus atributos y las retorna en una lista.
+   @param searchText el texto a buscar en los atributos de los Launch
+   @return lista de objetos de la clase Launch que representan los Launch encontrados
+   */
   public List<Launch> searchLaunch(String searchText) {
     EntityManager em = entityManagerFactory.createEntityManager();
     em.getTransaction().begin();

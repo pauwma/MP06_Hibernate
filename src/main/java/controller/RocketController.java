@@ -14,6 +14,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.StringTokenizer;
 
+/**
+ Esta clase es el controlador para la entidad de Rocket en el sistema.
+ Maneja la lectura, adición, actualización y eliminación de Rocket.
+ También proporciona funciones de búsqueda y listado de todos los Rocket.
+ */
 public class RocketController {
 
   private Connection connection;
@@ -30,12 +35,24 @@ public class RocketController {
     this.connection = connection;
   }
 
+  /**
+   Constructor de la clase.
+   Crea un nuevo objeto de controlador de Rocket con una conexión y un EntityManagerFactory dados.
+   @param connection La conexión a la base de datos que se utilizará.
+   @param entityManagerFactory El EntityManagerFactory que se utilizará para crear EntityManagers.
+   */
   public RocketController(Connection connection, EntityManagerFactory entityManagerFactory) {
     this.connection = connection;
     this.entityManagerFactory = entityManagerFactory;
     this.agencyController = new AgencyController(connection, entityManagerFactory);
   }
 
+  /**
+   Lee un archivo de texto que contiene datos de Rocket y devuelve una lista de Rocket.
+   @param filename El nombre del archivo de texto que se va a leer.
+   @return Una lista de Rocket leídas del archivo de texto.
+   @throws IOException Si ocurre un error de entrada/salida al leer el archivo.
+   */
   public List<Rocket> readRocketFile(String filename) throws IOException {
     String rocket_name = "";
     String rocket_family = "";
@@ -75,12 +92,20 @@ public class RocketController {
     return rocketList;
   }
 
+  /**
+   Imprime una lista de Rocket dada en la consola.
+   @param rocketList La lista de Rocket que se va a imprimir.
+   */
   public void printRocket(List<Rocket> rocketList) {
     for (int i = 0; i < rocketList.size(); i++) {
       System.out.println((i+1)+ " " +rocketList.get(i).toString());
     }
   }
 
+  /**
+   Agrega un Rocket a la base de datos.
+   @param rocket objeto de la clase Rocket que representa el Rocket a agregar
+   */
   public void addRocket(Rocket rocket) {
     EntityManager em = entityManagerFactory.createEntityManager();
     em.getTransaction().begin();
@@ -89,6 +114,10 @@ public class RocketController {
     em.close();
   }
 
+  /**
+   Retorna una lista con todos los Rocket almacenadas en la base de datos.
+   @return lista de objetos de la clase Rocket que representan todos los Rocket almacenados
+   */
   public List<Rocket> listRocket() {
     EntityManager em = entityManagerFactory.createEntityManager();
     em.getTransaction().begin();
@@ -99,6 +128,10 @@ public class RocketController {
     return result;
   }
 
+  /**
+   Actualiza un Rocket ya almacenado en la base de datos.
+   @param rocket objeto de la clase Rocket que representa el Rocket a actualizar
+   */
   public void updateRocket(Rocket rocket) {
     EntityManager em = entityManagerFactory.createEntityManager();
     em.getTransaction().begin();
@@ -107,6 +140,10 @@ public class RocketController {
     em.close();
   }
 
+  /**
+   Elimina un Rocket de la base de datos.
+   @param rocket_name el nombre del Rocket a eliminar
+   */
   public void deleteRocket(String rocket_name) {
     EntityManager em = entityManagerFactory.createEntityManager();
     em.getTransaction().begin();
@@ -116,6 +153,10 @@ public class RocketController {
     em.close();
   }
 
+  /**
+   Lee un archivo de texto que contiene información de Rocket y los agrega a la base de datos.
+   @throws IOException si ocurre un error al leer el archivo
+   */
   public void insertRocketList() throws IOException {
     List<Rocket> rocketList = readRocketFile("src/main/resources/rocket.txt");
     for (Rocket rocket : rocketList){
@@ -123,6 +164,11 @@ public class RocketController {
     }
   }
 
+  /**
+   Busca todos los Rocket que contengan un texto dado en alguno de sus atributos y las retorna en una lista.
+   @param searchText el texto a buscar en los atributos de los Rocket
+   @return lista de objetos de la clase Rocket que representan los Rocket encontrados
+   */
   public List<Rocket> searchRocket(String searchText) {
     try {
       EntityManager em = entityManagerFactory.createEntityManager();

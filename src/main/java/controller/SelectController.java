@@ -110,6 +110,12 @@ public class SelectController {
         }
     }
 
+    /**
+     Esta función permite seleccionar una tabla de la base de datos y buscar un texto en ella.
+
+     @param searchText Texto el cual buscar en la tabla.
+     @throws Exception Si no se encuentra ningún resultado.
+     */
     public List<Launch> selectTextParam(String searchText){
         try {
             return launchController.searchLaunch(searchText);
