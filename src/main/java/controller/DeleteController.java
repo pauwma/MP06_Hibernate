@@ -146,13 +146,13 @@ public class DeleteController {
                     }
                     break;
                 case 0:
-                    System.out.println("INFO - No se ha editado nada.");
+                    System.out.println("INFO - No se ha eliminado nada.");
                     break;
                 default:
                     System.out.println("ERROR - Opción no válida.");
             }
         } catch (Exception e){
-            System.out.println("ERROR - No se ha podido editar.");
+            System.out.println("ERROR - No se ha podido eliminar.");
         }
     }
 
