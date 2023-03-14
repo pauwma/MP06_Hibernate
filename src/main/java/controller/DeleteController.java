@@ -92,7 +92,69 @@ public class DeleteController {
         }
     }
 
+    /**
+     Elimina los lanzamientos asociados a una condición seleccionada por el usuario.
+     El usuario debe elegir el tipo de condición: cohete, agencia, ubicación o misión.
+     Una vez seleccionado el tipo de condición, se le pide al usuario que seleccione la condición específica
+     y luego se eliminan todos los lanzamientos asociados a esa condición.
+     @throws Exception si no se pudo eliminar el lanzamiento
+     */
+    public void deleteCondition(){
+        Scanner scanner = new Scanner(System.in);
+        int option = scannerInt("Introduce el tipo de condición (1: rocket, 2: agency, 3: location, 4: mission): ",0,4);
 
+        try {
+            switch (option) {
+                case 1:
+                    List<Rocket> rocketList = rocketController.listRocket();
+                    rocketController.printRocket(rocketList);
+                    int rocketOption = scannerInt("\nELiminar lanzamientos con cohete: (1-" + rocketList.size() + "): ", 1, rocketList.size());
+                    Rocket rocketToUpdate = rocketList.get(rocketOption-1);
+                    List<Launch> launchesToEditRocket = selectController.selectTextParam(rocketToUpdate.getRocket_name());
+                    for (Launch l : launchesToEditRocket){
+                        launchController.deleteLaunch(l.getLaunch_title());
+                    }
+                    break;
+                case 2:
+                    List<Agency> agencyList = agencyController.listAgency();
+                    agencyController.printAgency(agencyList);
+                    int agencyOption = scannerInt("\nELiminar lanzamientos con agencia: (1-" + agencyList.size() + "): ", 1, agencyList.size());
+                    Agency agencyToUpdate = agencyList.get(agencyOption-1);
+                    List<Launch> launchesToEditAgency = selectController.selectTextParam(agencyToUpdate.getAgency_name());
+                    for (Launch l : launchesToEditAgency){
+                        launchController.deleteLaunch(l.getLaunch_title());
+                    }
+                    break;
+                case 3:
+                    List<Location> locationList = locationController.listLocation();
+                    locationController.printLocation(locationList);
+                    int locationOption = scannerInt("\nELiminar lanzamientos con ubicación: (1-" + locationList.size() + "): ", 1, locationList.size());
+                    Location locationToUpdate = locationList.get(locationOption-1);
+                    List<Launch> launchesToEditLocation = selectController.selectTextParam(locationToUpdate.getLocationName());
+                    for (Launch l : launchesToEditLocation){
+                        launchController.deleteLaunch(l.getLaunch_title());
+                    }
+                    break;
+                case 4:
+                    List<Mission> missionList = missionController.listMission();
+                    missionController.printMission(missionList);
+                    int missionOption = scannerInt("\nELiminar lanzamientos con misión: (1-" + missionList.size() + "): ", 1, missionList.size());
+                    Mission missionToUpdate = missionList.get(missionOption-1);
+                    List<Launch> launchesToEditMission = selectController.selectTextParam(missionToUpdate.getMission_name());
+                    for (Launch l : launchesToEditMission){
+                        launchController.deleteLaunch(l.getLaunch_title());
+                    }
+                    break;
+                case 0:
+                    System.out.println("INFO - No se ha editado nada.");
+                    break;
+                default:
+                    System.out.println("ERROR - Opción no válida.");
+            }
+        } catch (Exception e){
+            System.out.println("ERROR - No se ha podido editar.");
+        }
+    }
 
     /**
      * Método para preguntar al usuario por un String con excepciones.

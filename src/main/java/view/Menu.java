@@ -208,6 +208,7 @@ public class Menu {
                             deleteController.deleteMain();
                             break;
                         case 2:
+                            deleteController.deleteCondition();
                             break;
                         case 0:
                             cerrarSubmenu = true;
